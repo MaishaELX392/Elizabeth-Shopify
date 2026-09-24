@@ -139,21 +139,27 @@
           </svg>
         </a>
 
-        {% if shop.customer_accounts_enabled %}
-          <a
-            href="{{ routes.account_login_url }}"
-            class="site-header__action-link"
-          >
-            Login
-          </a>
+  {% if shop.customer_accounts_enabled %}
 
-          <a
-            href="{{ routes.account_register_url }}"
-            class="site-header__action-link"
-          >
-            Register
-          </a>
-        {% endif %}
+  {% if section.settings.show_login %}
+    <a
+      href="{{ routes.account_login_url }}"
+      class="site-header__action-link"
+    >
+      Login
+    </a>
+  {% endif %}
+
+  {% if section.settings.show_register %}
+    <a
+      href="{{ routes.account_register_url }}"
+      class="site-header__action-link"
+    >
+      Register
+    </a>
+  {% endif %}
+
+{% endif %}
 
       </div>
 
@@ -293,7 +299,19 @@
       "id": "mobile_menu_title",
       "label": "Mobile menu title",
       "default": "MENU"
-    }
+    },
+    {
+  "type": "checkbox",
+  "id": "show_login",
+  "label": "Show Login",
+  "default": true
+},
+{
+  "type": "checkbox",
+  "id": "show_register",
+  "label": "Show Register",
+  "default": true
+}
   ],
 
   "blocks": [
