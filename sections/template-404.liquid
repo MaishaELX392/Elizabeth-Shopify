@@ -1,0 +1,56 @@
+{{ 'template-404.css' | asset_url | stylesheet_tag }}
+<div class="template-404">
+  <div class="template-404__content">
+    <div class="template-404__title">{{ section.settings.title }}</div>
+
+    <div class="template-404__text">
+      <p>{{ section.settings.subtext_title }}</p>
+    </div>
+
+    <div class="template-404__button-wrapper">
+      {% if section.settings.button_url == blank %}
+        {% assign shop_url = shop.secure_url %}
+      {% else %}
+        {% assign shop_url = section.settings.button_url %}
+      {% endif %}
+
+      <a href="{{ shop_url }}" class="template-404__button">
+        {{ section.settings.button_label }}
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Template 404",
+  "tag": "section",
+  "class": "template-404-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "404",
+      "label": "404 Heading Title"
+    },
+    {
+      "type": "text",
+      "id": "subtext_title",
+      "default": "The page that you're looking for is not found",
+      "label": "404 Subtext Title"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Back to homepage",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,256 @@
+.template-article {
+  width: 100%;
+  padding: 70px 20px 100px;
+  background: #ffffff;
+  color: #1a1a1a;
+  box-sizing: border-box;
+}
+
+.template-article__title-section,
+.template-article__author-section,
+.template-article__date-section,
+.template-article__content-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.template-article__title-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.template-article__blog-title {
+  display: inline-block;
+  margin-bottom: 22px;
+  color: #777777;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.template-article__blog-title:hover {
+  color: #111111;
+}
+
+.template-article__title {
+  margin: 0;
+  color: #111111;
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.template-article__meta {
+  color: #777777;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.template-article__meta small,
+.template-article__meta time {
+  display: inline-block;
+}
+
+.template-article__author-section {
+  margin-top: 24px;
+}
+
+.template-article__date-section {
+  margin-top: 6px;
+}
+
+.template-article__image-wrapper {
+  width: 100%;
+  max-width: 1280px;
+  margin: 55px auto 75px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #eef3f5;
+  line-height: 0;
+}
+
+.template-article__image {
+  display: block;
+  width: 100%;
+  height: 580px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.template-article__placeholder {
+  display: block;
+  width: 100%;
+  height: 580px;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.template-article__content {
+  width: 100%;
+  max-width: 800px;
+  color: #333333;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.template-article__content p {
+  margin: 0 0 28px;
+}
+
+.template-article__content h2 {
+  margin: 55px 0 20px;
+  color: #111111;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.template-article__content h3 {
+  margin: 42px 0 16px;
+  color: #111111;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.template-article__content h4 {
+  margin: 35px 0 14px;
+  color: #111111;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.template-article__content a {
+  color: #111111;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.template-article__content strong {
+  color: #111111;
+  font-weight: 700;
+}
+
+.template-article__content ul,
+.template-article__content ol {
+  margin: 0 0 30px;
+  padding-left: 25px;
+}
+
+.template-article__content li {
+  margin-bottom: 10px;
+}
+
+.template-article__content blockquote {
+  margin: 45px 0;
+  padding: 10px 25px;
+  border-left: 3px solid #111111;
+  color: #555555;
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.template-article__content img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 45px 0;
+  border-radius: 12px;
+}
+
+.template-article__content figure {
+  margin: 45px 0;
+}
+
+.template-article__content figcaption {
+  margin-top: 10px;
+  color: #777777;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media screen and (max-width: 749px) {
+  .template-article {
+    padding: 45px 16px 70px;
+  }
+
+  .template-article__blog-title {
+    margin-bottom: 16px;
+    font-size: 11px;
+  }
+
+  .template-article__title {
+    font-size: clamp(36px, 10vw, 50px);
+    line-height: 1.08;
+  }
+
+  .template-article__author-section {
+    margin-top: 20px;
+  }
+
+  .template-article__meta {
+    font-size: 13px;
+  }
+
+  .template-article__image-wrapper {
+    margin: 40px auto 55px;
+    border-radius: 12px;
+  }
+
+  .template-article__image {
+    height: 360px;
+  }
+
+  .template-article__placeholder {
+    height: 360px;
+    padding: 20px;
+  }
+
+  .template-article__content {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .template-article__content p {
+    margin-bottom: 22px;
+  }
+
+  .template-article__content h2 {
+    margin-top: 42px;
+    font-size: 28px;
+  }
+
+  .template-article__content h3 {
+    margin-top: 34px;
+    font-size: 23px;
+  }
+
+  .template-article__content h4 {
+    margin-top: 28px;
+    font-size: 19px;
+  }
+
+  .template-article__content blockquote {
+    margin: 35px 0;
+    padding: 8px 18px;
+    font-size: 19px;
+  }
+
+  .template-article__content img {
+    margin: 35px 0;
+    border-radius: 8px;
+  }
+}
