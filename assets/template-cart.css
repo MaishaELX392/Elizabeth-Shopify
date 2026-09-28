@@ -1,0 +1,269 @@
+.template-cart {
+width: 100%;
+padding: 16px;
+box-sizing: border-box;
+}
+
+.template-cart__header-wrapper,
+.template-cart__content-wrapper {
+width: 100%;
+max-width: 1152px;
+margin: 40px auto;
+}
+
+.template-cart__header-content {
+width: 100%;
+}
+
+.template-cart__title-row {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+margin: 20px 0;
+}
+
+.template-cart__title {
+margin: 0;
+font-size: 30px;
+font-weight: 400;
+}
+
+.template-cart__continue {
+color: #2563eb;
+font-weight: 500;
+text-decoration: underline;
+}
+
+.template-cart__continue:hover {
+color: #1e40af;
+}
+
+.template-cart__form {
+width: 100%;
+}
+
+.template-cart__table {
+width: 100%;
+margin: 16px 0;
+border-collapse: collapse;
+}
+
+.template-cart__heading {
+padding: 12px 24px;
+border-bottom: 1px solid #e5e7eb;
+color: #6b7280;
+text-align: left;
+font-size: 14px;
+font-weight: 500;
+}
+
+.template-cart__item {
+border-bottom: 1px solid #e5e7eb;
+}
+
+.template-cart__product {
+display: flex;
+align-items: center;
+gap: 16px;
+padding: 16px 8px;
+}
+
+.template-cart__image,
+.template-cart__placeholder {
+display: block;
+width: 80px;
+height: 80px;
+border: 1px solid #d1d5db;
+object-fit: cover;
+box-sizing: border-box;
+}
+
+.template-cart__product-info {
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+.template-cart__product-title {
+margin: 4px 0;
+color: #111111;
+text-decoration: none;
+}
+
+.template-cart__product-title:hover {
+text-decoration: underline;
+}
+
+.template-cart__variant {
+margin: 4px 0;
+color: #6b7280;
+font-size: 14px;
+}
+
+.template-cart__remove {
+margin: 4px 0;
+color: #ef4444;
+font-size: 14px;
+font-weight: 500;
+text-decoration: none;
+}
+
+.template-cart__remove:hover {
+text-decoration: underline;
+}
+
+.template-cart__quantity,
+.template-cart__price {
+padding: 16px 8px;
+}
+
+.template-cart__quantity-input {
+width: 80px;
+padding: 8px;
+border: 1px solid #d1d5db;
+box-sizing: border-box;
+}
+
+.template-cart__price {
+white-space: nowrap;
+}
+
+.template-cart__bottom {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 32px;
+}
+
+.template-cart__notes {
+width: 100%;
+margin: 16px 0;
+}
+
+.template-cart__notes label {
+display: block;
+margin: 4px 0;
+}
+
+.template-cart__notes-input {
+width: 100%;
+max-width: 512px;
+height: 80px;
+padding: 8px;
+border: 1px solid #d1d5db;
+resize: none;
+box-sizing: border-box;
+font-family: inherit;
+}
+
+.template-cart__summary {
+width: 320px;
+margin: 16px 0;
+}
+
+.template-cart__subtotal {
+margin: 0 0 16px;
+font-size: 20px;
+font-weight: 400;
+}
+
+.template-cart__button-wrapper {
+margin: 8px 0;
+}
+
+.template-cart__button {
+width: 100%;
+padding: 12px;
+border: 1px solid #4b5563;
+font-family: inherit;
+font-size: 16px;
+font-weight: 500;
+cursor: pointer;
+box-sizing: border-box;
+}
+
+.template-cart__button--update {
+background: #ffffff;
+color: #4b5563;
+}
+
+.template-cart__button--update:hover {
+background: #4b5563;
+color: #ffffff;
+}
+
+.template-cart__button--checkout {
+background: #4b5563;
+color: #ffffff;
+}
+
+.template-cart__button--checkout:hover {
+background: #374151;
+}
+
+.template-cart--empty {
+padding: 0 16px;
+}
+
+.template-cart__empty {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+max-width: 1152px;
+height: 240px;
+margin: 16px auto;
+}
+
+.template-cart__empty-content {
+text-align: center;
+}
+
+.template-cart__empty-title {
+margin: 16px 0;
+font-size: 30px;
+font-weight: 400;
+}
+
+.template-cart__empty-action {
+margin: 16px 0;
+padding: 16px 0;
+}
+
+.template-cart__empty-button {
+display: inline-block;
+padding: 12px 32px;
+border: 1px solid #4b5563;
+background: #4b5563;
+color: #ffffff;
+text-decoration: none;
+}
+
+.template-cart__empty-button:hover {
+background: #374151;
+}
+
+@media screen and (max-width: 767px) {
+.template-cart__title-row {
+align-items: flex-start;
+flex-direction: column;
+gap: 12px;
+}
+
+.template-cart__bottom {
+align-items: stretch;
+flex-direction: column;
+}
+
+.template-cart__summary {
+width: 100%;
+}
+
+.template-cart__notes-input {
+max-width: none;
+}
+
+.template-cart__table {
+min-width: 650px;
+}
+}

@@ -1,70 +1,244 @@
+
 {{ 'template-article.css' | asset_url | stylesheet_tag }}
 
 <article class="template-article">
-  {% for block in section.blocks %}
-    {% case block.type %}
 
-      {% when 'article_title' %}
-        <div class="template-article__title-section">
-          <div class="template-article__title-container">
-            <a href="{{ blog.url }}" class="template-article__blog-title">
-              {{ blog.title }}
-            </a>
+  <div class="template-article__title-section">
+    <div class="template-article__title-container">
 
-            <h1 class="template-article__title">
-              {{ article.title }}
-            </h1>
-          </div>
-        </div>
+      <a href="{{ blog.url }}" class="template-article__blog-title">
+        {{ blog.title }}
+      </a>
 
-      {% when 'article_author' %}
-        <div class="template-article__author-section">
-          <div class="template-article__meta">
-            {% if section.settings.enable_author %}
-              <small>{{ article.author }}</small>
+      <h1 class="template-article__title">
+        {{ article.title }}
+      </h1>
+
+      <div class="template-article__meta">
+
+        {% if section.settings.enable_author %}
+          <span>{{ article.author }}</span>
+        {% endif %}
+
+        {% if section.settings.enable_author and section.settings.enable_published_date %}
+          <span class="template-article__meta-separator">•</span>
+        {% endif %}
+
+        {% if section.settings.enable_published_date %}
+          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+            {{ article.published_at | date: format: 'on_date' }}
+          </time>
+        {% endif %}
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="template-article__image-wrapper">
+
+    {% if article.image != blank %}
+
+      <img
+        class="template-article__image"
+        src="{{ article.image | image_url: width: 1600 }}"
+        alt="{{ article.image.alt | escape }}"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+      >
+
+    {% else %}
+
+      {% assign placeholder_image = 'lifestyle-1' %}
+      {{ placeholder_image | placeholder_svg_tag: 'template-article__placeholder' }}
+
+    {% endif %}
+
+  </div>
+
+  <div class="template-article__content-section">
+    <div class="template-article__content">
+      {{ article.content }}
+    </div>
+  </div>
+
+
+  {% if blog.comments_enabled? %}
+
+    <div id="comments" class="template-article__comments">
+
+      {% if article.comments_count > 0 %}
+
+        <div class="template-article__comments-container">
+
+          <h2 class="template-article__comments-title">
+            See what people are saying
+          </h2>
+
+          {% paginate article.comments by 5 %}
+
+            <div class="template-article__comments-list">
+
+              {% for comment in article.comments %}
+
+                <div class="template-article__comment">
+
+                  <div class="template-article__comment-header">
+
+                    <strong class="template-article__comment-author">
+                      {{ comment.author }}
+                    </strong>
+
+                    <time
+                      class="template-article__comment-date"
+                      datetime="{{ comment.created_at | date: '%Y-%m-%d' }}"
+                    >
+                      {{ comment.created_at | date: format: 'default' }}
+                    </time>
+
+                  </div>
+
+                  <div class="template-article__comment-content">
+                    {{ comment.content }}
+                  </div>
+
+                </div>
+
+              {% endfor %}
+
+            </div>
+
+            {% if paginate.pages > 1 %}
+              <div class="template-article__pagination">
+                {{ paginate | default_pagination }}
+              </div>
             {% endif %}
-          </div>
-        </div>
 
-      {% when 'article_published_date' %}
-        <div class="template-article__date-section">
-          <div class="template-article__meta">
-            {% if section.settings.enable_published_date %}
-              <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-                {{ article.published_at | date: format: 'on_date' }}
-              </time>
-            {% endif %}
-          </div>
-        </div>
+          {% endpaginate %}
 
-      {% when 'featured_image' %}
-        <div class="template-article__image-wrapper">
-          {% if article.image != blank %}
-            <img
-              class="template-article__image"
-              src="{{ article.image | img_url: 'large' }}"
-              alt="{{ article.image.alt | escape }}"
-              width="{{ article.image.width }}"
-              height="{{ article.image.height }}"
-            >
-          {% else %}
-            {% assign placeholder_image = 'lifestyle-1' %}
-            {{ placeholder_image | placeholder_svg_tag: 'template-article__placeholder' }}
-          {% endif %}
-        </div>
-
-      {% when 'article_content' %}
-        <div class="template-article__content-section">
-          <div class="template-article__content">
-            {{ article.content }}
-          </div>
         </div>
 
       {% else %}
 
-    {% endcase %}
-  {% endfor %}
+        <div class="template-article__comments-container">
+
+          <h2 class="template-article__comments-title">
+            There are no comments in this article
+          </h2>
+
+        </div>
+
+      {% endif %}
+
+    </div>
+
+
+    <div id="comment_form" class="template-article__comment-form-wrapper">
+
+      {% form 'new_comment', article %}
+
+        <div class="template-article__comment-form">
+
+          {% if form.errors %}
+
+            <div class="template-article__form-message template-article__form-message--error">
+
+              <strong>
+                Oh no! Your comment was not posted
+              </strong>
+
+              <ul>
+                {% for error in form.errors %}
+                  <li>
+                    {{ form.errors.messages[error] }}
+                  </li>
+                {% endfor %}
+              </ul>
+
+            </div>
+
+          {% elsif form.posted_successfully? %}
+
+            <div class="template-article__form-message template-article__form-message--success">
+              Comment is posted successfully
+            </div>
+
+          {% endif %}
+
+
+          <div class="template-article__form-row">
+
+            <div class="template-article__form-field">
+
+              <label for="comment_author">
+                Name
+              </label>
+
+              <input
+                type="text"
+                name="comment[author]"
+                id="comment_author"
+                placeholder="Jane Doe"
+                required
+              >
+
+            </div>
+
+
+            <div class="template-article__form-field">
+
+              <label for="comment_email">
+                Email
+              </label>
+
+              <input
+                type="email"
+                name="comment[email]"
+                id="comment_email"
+                placeholder="jane@doe.com"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="template-article__form-field template-article__form-field--full">
+
+            <label for="comment_content">
+              Comment
+            </label>
+
+            <textarea
+              name="comment[body]"
+              id="comment_content"
+              rows="6"
+              required
+            ></textarea>
+
+          </div>
+
+
+          <div class="template-article__form-submit">
+
+            <input
+              type="submit"
+              value="Post comment"
+            >
+
+          </div>
+
+        </div>
+
+      {% endform %}
+
+    </div>
+
+  {% endif %}
+
 </article>
+
 
 {% schema %}
 {
@@ -81,33 +255,6 @@
       "id": "enable_published_date",
       "default": true,
       "label": "Display Published Date"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "article_title",
-      "name": "Title",
-      "limit": 1
-    },
-    {
-      "type": "article_author",
-      "name": "Author",
-      "limit": 1
-    },
-    {
-      "type": "article_published_date",
-      "name": "Published Date",
-      "limit": 1
-    },
-    {
-      "type": "featured_image",
-      "name": "Thumbnail",
-      "limit": 1
-    },
-    {
-      "type": "article_content",
-      "name": "Content",
-      "limit": 1
     }
   ]
 }
