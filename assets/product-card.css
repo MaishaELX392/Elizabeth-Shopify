@@ -1,0 +1,115 @@
+.product-card-wrapper {
+  width: 100%;
+  padding: 24px 12px;
+  box-sizing: border-box;
+}
+
+.product-card {
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+              0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.product-card__link {
+  display: block;
+}
+
+.product-card__image-wrapper {
+  height: 320px;
+  overflow: hidden;
+}
+
+.product-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1000ms ease-in-out;
+}
+
+.product-card__image:hover {
+  transform: scale(1.05);
+}
+
+.product-card__placeholder {
+  display: block;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  background-color: #f3f4f6;
+}
+
+.product-card__info {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.product-card__vendor {
+  font-size: 14px;
+  line-height: 20px;
+  color: #9ca3af;
+}
+
+.product-card__title {
+  color: #374151;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.product-card__price {
+  margin: 0;
+  color: #6b7280;
+}
+.product-card-placeholder-wrapper {
+  width: 100%;
+  padding: 24px 12px;
+  box-sizing: border-box;
+}
+
+.product-card-placeholder {
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+              0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.product-card-placeholder__image {
+  display: block;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  background-color: #f3f4f6;
+}
+
+.product-card-placeholder__info {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.product-card-placeholder__vendor {
+  margin-bottom: 4px;
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.product-card-placeholder__title {
+  margin-bottom: 8px;
+  color: #374151;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.product-card-placeholder__price {
+  color: #6b7280;
+  font-size: 16px;
+}

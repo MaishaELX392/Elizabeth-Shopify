@@ -1,0 +1,32 @@
+.featured-collection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 32px 0;
+}
+
+.featured-collection__title {
+  margin: 0;
+  text-align: center;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 400;
+}
+
+.featured-collection__container {
+  width: 100%;
+  max-width: 1152px;
+  margin: 0 auto;
+}
+
+.featured-collection__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .featured-collection__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

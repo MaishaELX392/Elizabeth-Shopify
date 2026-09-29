@@ -1,0 +1,76 @@
+{{ 'featured-collection.css' | asset_url | stylesheet_tag }}
+
+<div class="featured-collection">
+
+  <h1 class="featured-collection__title">
+    {{ section.settings.title }}
+  </h1>
+
+  <div class="featured-collection__container">
+
+    <div class="featured-collection__grid">
+
+      {% if section.settings.featured_collection != blank %}
+
+        {% for product in section.settings.featured_collection.products limit: section.settings.number_of_products_to_show %}
+
+          {% render 'product-card', product_product: product %}
+
+        {% else %}
+
+          {% for item in (1..section.settings.number_of_products_to_show) %}
+
+            {% render 'product-card-placeholder' %}
+
+          {% endfor %}
+
+        {% endfor %}
+
+      {% else %}
+
+        {% for item in (1..section.settings.number_of_products_to_show) %}
+
+          {% render 'product-card-placeholder' %}
+
+        {% endfor %}
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Featured Collection",
+      "label": "Title"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "number_of_products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Number of products to show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}

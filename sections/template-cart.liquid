@@ -4,219 +4,203 @@
 
   <div class="template-cart">
 
-```
-<div class="template-cart__header-wrapper">
+    <div class="template-cart__header-wrapper">
 
-  <div class="template-cart__header">
+      <div class="template-cart__header">
 
-    <div class="template-cart__header-content">
+        <div class="template-cart__header-content">
 
-      <div class="template-cart__title-row">
+          <div class="template-cart__title-row">
 
-        <h1 class="template-cart__title">
-          Your cart
-        </h1>
+            <h1 class="template-cart__title">
+              Your cart
+            </h1>
 
-        <a
-          href="{{ routes.all_products_collection_url }}"
-          class="template-cart__continue"
-        >
-          Continue shopping
-        </a>
+            <a
+              href="{{ routes.all_products_collection_url }}"
+              class="template-cart__continue"
+            >
+              Continue shopping
+            </a>
+
+          </div>
+
+        </div>
 
       </div>
 
     </div>
 
-  </div>
+    <div class="template-cart__content-wrapper">
 
-</div>
+      {% form 'cart', cart, class: 'template-cart__form' %}
 
+        <table class="template-cart__table">
 
-<div class="template-cart__content-wrapper">
+          <thead>
 
-  <form
-    action="{{ routes.cart_url }}"
-    method="POST"
-    novalidate
-    class="template-cart__form"
-  >
+            <tr>
 
-    <table class="template-cart__table">
+              <th class="template-cart__heading">
+                Product
+              </th>
 
-      <thead>
+              <th class="template-cart__heading">
+                Quantity
+              </th>
 
-        <tr>
+              <th class="template-cart__heading">
+                Total Price
+              </th>
 
-          <th class="template-cart__heading">
-            Product
-          </th>
+            </tr>
 
-          <th class="template-cart__heading">
-            Quantity
-          </th>
+          </thead>
 
-          <th class="template-cart__heading">
-            Total Price
-          </th>
+          <tbody>
 
-        </tr>
+            {% for item in cart.items %}
 
-      </thead>
+              <tr class="template-cart__item">
 
+                <td class="template-cart__product">
 
-      <tbody>
+                  <a href="{{ item.url }}">
 
-        {% for item in cart.items %}
+                    {% if item.image %}
 
-          <tr class="template-cart__item">
+                      <img
+                        src="{{ item.image | img_url: 'small' }}"
+                        alt="{{ item.title | escape }}"
+                        class="template-cart__image"
+                      >
 
-            <td class="template-cart__product">
+                    {% else %}
 
-              <a href="{{ item.url }}">
+                      {{ 'product-1' | placeholder_svg_tag: 'template-cart__placeholder' }}
 
-                {% if item.image %}
+                    {% endif %}
 
-                  <img
-                    src="{{ item.image | img_url: 'small' }}"
-                    alt="{{ item.title | escape }}"
-                    class="template-cart__image"
+                  </a>
+
+                  <div class="template-cart__product-info">
+
+                    <a
+                      href="{{ item.url }}"
+                      class="template-cart__product-title"
+                    >
+                      {{ item.product.title | truncatewords: 5 }}
+                    </a>
+
+                    <span class="template-cart__variant">
+                      {{ item.variant.title }}
+                    </span>
+
+                    <a
+                      href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0"
+                      class="template-cart__remove"
+                    >
+                      Remove
+                    </a>
+
+                  </div>
+
+                </td>
+
+                <td class="template-cart__quantity">
+
+                  <input
+                    type="number"
+                    name="updates[]"
+                    id="updates_{{ forloop.index }}"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    class="template-cart__quantity-input"
                   >
 
-                {% else %}
+                </td>
 
-                  {{ 'product-1' | placeholder_svg_tag: 'template-cart__placeholder' }}
+                <td class="template-cart__price">
 
-                {% endif %}
+                  {{ item.line_price | money }}
 
-              </a>
+                </td>
 
+              </tr>
 
-              <div class="template-cart__product-info">
+            {% endfor %}
 
-                <a
-                  href="{{ item.url }}"
-                  class="template-cart__product-title"
-                >
-                  {{ item.product.title | truncatewords: 5 }}
-                </a>
+          </tbody>
 
-                <span class="template-cart__variant">
-                  {{ item.variant.title }}
-                </span>
+        </table>
 
-                <a
-                  href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0"
-                  class="template-cart__remove"
-                >
-                  Remove
-                </a>
+        <div class="template-cart__bottom">
 
-              </div>
+          <div class="template-cart__notes">
 
-            </td>
+            <label for="cart_note">
+              Cart notes
+            </label>
 
+            <textarea
+              name="note"
+              id="cart_note"
+              class="template-cart__notes-input"
+            >{{ cart.note }}</textarea>
 
-            <td class="template-cart__quantity">
+          </div>
 
-              <input
-                type="number"
-                name="updates[]"
-                id="updates_{{ forloop.index }}"
-                value="{{ item.quantity }}"
-                min="0"
-                class="template-cart__quantity-input"
-              >
+          <div class="template-cart__summary">
 
-            </td>
+            {% for block in section.blocks %}
 
+              {% case block.type %}
 
-            <td class="template-cart__price">
+                {% when 'subtotal' %}
 
-              {{ item.line_price | money }}
+                  <h3 class="template-cart__subtotal">
+                    Subtotal: {{ cart.total_price | money }}
+                  </h3>
 
-            </td>
+                {% when 'update_button' %}
 
-          </tr>
+                  <div class="template-cart__button-wrapper">
 
-        {% endfor %}
+                    <button
+                      type="submit"
+                      name="update"
+                      class="template-cart__button template-cart__button--update"
+                    >
+                      Update
+                    </button>
 
-      </tbody>
+                  </div>
 
-    </table>
+                {% when 'checkout_button' %}
 
+                  <div class="template-cart__button-wrapper">
 
-    <div class="template-cart__bottom">
+                    <button
+                      type="submit"
+                      name="checkout"
+                      class="template-cart__button template-cart__button--checkout"
+                    >
+                      Checkout
+                    </button>
 
-      <div class="template-cart__notes">
+                  </div>
 
-        <label for="cart_note">
-          Cart notes
-        </label>
+              {% endcase %}
 
-        <textarea
-          name="note"
-          id="cart_note"
-          class="template-cart__notes-input"
-        ></textarea>
+            {% endfor %}
 
-      </div>
+          </div>
 
+        </div>
 
-      <div class="template-cart__summary">
-
-        {% for block in section.blocks %}
-
-          {% case block.type %}
-
-            {% when 'subtotal' %}
-
-              <h3 class="template-cart__subtotal">
-                Subtotal: {{ cart.total_price | money }}
-              </h3>
-
-
-            {% when 'update_button' %}
-
-              <div class="template-cart__button-wrapper">
-
-                <button
-                  type="submit"
-                  name="update"
-                  class="template-cart__button template-cart__button--update"
-                >
-                  Update
-                </button>
-
-              </div>
-
-
-            {% when 'checkout_button' %}
-
-              <div class="template-cart__button-wrapper">
-
-                <button
-                  type="submit"
-                  name="checkout"
-                  class="template-cart__button template-cart__button--checkout"
-                >
-                  Checkout
-                </button>
-
-              </div>
-
-          {% endcase %}
-
-        {% endfor %}
-
-      </div>
+      {% endform %}
 
     </div>
-
-  </form>
-
-</div>
-```
 
   </div>
 
@@ -224,30 +208,28 @@
 
   <div class="template-cart template-cart--empty">
 
-```
-<div class="template-cart__empty">
+    <div class="template-cart__empty">
 
-  <div class="template-cart__empty-content">
+      <div class="template-cart__empty-content">
 
-    <h1 class="template-cart__empty-title">
-      Your cart is empty
-    </h1>
+        <h1 class="template-cart__empty-title">
+          Your cart is empty
+        </h1>
 
-    <div class="template-cart__empty-action">
+        <div class="template-cart__empty-action">
 
-      <a
-        href="{{ routes.all_products_collection_url }}"
-        class="template-cart__empty-button"
-      >
-        Continue shopping
-      </a>
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="template-cart__empty-button"
+          >
+            Continue shopping
+          </a>
+
+        </div>
+
+      </div>
 
     </div>
-
-  </div>
-
-</div>
-```
 
   </div>
 
@@ -255,23 +237,23 @@
 
 {% schema %}
 {
-"name": "Template Cart",
-"blocks": [
-{
-"type": "subtotal",
-"name": "Subtotal",
-"limit": 1
-},
-{
-"type": "update_button",
-"name": "Update Button",
-"limit": 1
-},
-{
-"type": "checkout_button",
-"name": "Checkout Button",
-"limit": 1
-}
-]
+  "name": "Template Cart",
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "Subtotal",
+      "limit": 1
+    },
+    {
+      "type": "update_button",
+      "name": "Update Button",
+      "limit": 1
+    },
+    {
+      "type": "checkout_button",
+      "name": "Checkout Button",
+      "limit": 1
+    }
+  ]
 }
 {% endschema %}

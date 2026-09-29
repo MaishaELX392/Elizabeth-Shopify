@@ -1,0 +1,48 @@
+<div class="product-card-wrapper">
+
+  <div class="product-card">
+
+    <a href="{{ product_product.url }}" class="product-card__link">
+
+      {% if product_product.featured_image %}
+
+        <div class="product-card__image-wrapper">
+
+          <img
+            class="product-card__image"
+            src="{{ product_product.featured_image | img_url: 'medium' }}"
+            alt="{{ product_product.featured_image.alt }}"
+          >
+
+        </div>
+
+      {% else %}
+
+        {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+
+      {% endif %}
+
+    </a>
+
+    <div class="product-card__info">
+
+      <span class="product-card__vendor">
+        {{ product_product.vendor }}
+      </span>
+
+      <a
+        href="{{ product_product.url }}"
+        class="product-card__title"
+      >
+        {{ product_product.title }}
+      </a>
+
+      <p class="product-card__price">
+        {{ product_product.price | money }}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

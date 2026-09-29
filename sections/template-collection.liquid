@@ -1,0 +1,51 @@
+{{ 'collection.css' | asset_url | stylesheet_tag }}
+{{ 'product-card.css' | asset_url | stylesheet_tag }}
+{{ 'pagination.css' | asset_url | stylesheet_tag }}
+
+<div class="collection">
+
+  {% paginate collection.products by section.settings.number_of_products_per_page %}
+
+    <h1 class="collection__title">
+      {{ collection.title }}
+    </h1>
+
+    <div class="collection__container">
+
+      <div class="collection__grid">
+
+        {% for product in collection.products %}
+
+          {% render 'product-card', product_product: product %}
+
+        {% else %}
+
+          <p class="collection__empty">
+            There are no products inside of this collection
+          </p>
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+
+    {% render 'pagination', pagination: paginate %}
+
+  {% endpaginate %}
+
+</div>
+
+{% schema %}
+{
+  "name": "Template Collection",
+  "settings": [
+    {
+      "type": "number",
+      "id": "number_of_products_per_page",
+      "default": 6,
+      "label": "Number of products per page"
+    }
+  ]
+}
+{% endschema %}

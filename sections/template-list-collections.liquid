@@ -1,0 +1,85 @@
+{{ 'collection-list.css' | asset_url | stylesheet_tag }}
+
+<div class="collection-list">
+
+  <h1 class="collection-list__title">
+    {{ section.settings.title }}
+  </h1>
+
+  <div class="collection-list__container">
+
+    <div class="collection-list__grid">
+
+      {% for collection in collections %}
+
+        {% if collection.all_products_count > 0 %}
+
+          <div class="collection-list__item">
+
+            <div class="collection-list__card">
+
+              <a href="{{ collection.url }}">
+
+                <div class="collection-list__image-wrapper">
+
+                  {% if collection.featured_image != blank %}
+
+                    {% assign collection_image = collection.featured_image %}
+
+                  {% else %}
+
+                    {% assign collection_image = collection.products.first.image %}
+
+                  {% endif %}
+
+                  {% if collection_image != blank %}
+
+                    <img
+                      class="collection-list__image"
+                      src="{{ collection_image | image_url: width: 600 }}"
+                      width="{{ collection_image.width }}"
+                      height="{{ collection_image.height }}"
+                      alt="{{ collection.title | escape }}"
+                    >
+
+                  {% endif %}
+
+                </div>
+
+              </a>
+
+              <div class="collection-list__info">
+
+                <h1 class="collection-list__name">
+                  {{ collection.title }}
+                </h1>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        {% endif %}
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Template List Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Collections",
+      "label": "Title"
+    }
+  ]
+}
+{% endschema %}

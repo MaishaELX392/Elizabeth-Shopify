@@ -1,0 +1,32 @@
+.collection {
+  padding: 32px 16px;
+}
+
+.collection__title {
+  margin: 0;
+  text-align: center;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 400;
+}
+
+.collection__container {
+  max-width: 1152px;
+  margin: 0 auto;
+}
+
+.collection__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.collection__empty {
+  margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .collection__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
