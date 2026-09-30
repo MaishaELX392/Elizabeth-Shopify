@@ -1,0 +1,164 @@
+{{ 'contact-form.css' | asset_url | stylesheet_tag }}
+
+<div class="contact-form">
+
+{% if section.settings.title != blank %} <h1 class="contact-form__title">
+{{ section.settings.title }} </h1>
+{% endif %}
+
+{% form 'contact' %}
+
+
+{% if form.errors %}
+
+  <div class="contact-form__errors">
+
+    <div class="contact-form__message contact-form__message--error">
+
+      <div class="contact-form__icon contact-form__icon--error">
+        {% render 'icon-failed' %}
+      </div>
+
+      <div class="contact-form__message-text">
+        Oh no! Your message is not sent
+      </div>
+
+    </div>
+
+    <ul class="contact-form__error-list">
+
+      {% for error in form.errors %}
+
+        <li>
+          <span>
+            {{ form.errors.messages[error] }}
+          </span>
+        </li>
+
+      {% endfor %}
+
+    </ul>
+
+  </div>
+
+{% elsif form.posted_successfully? %}
+
+  <div class="contact-form__success">
+
+    <div class="contact-form__message">
+
+      <div class="contact-form__icon contact-form__icon--success">
+        {% render 'icon-success' %}
+      </div>
+
+      <div class="contact-form__message-text">
+        Your message is sent successfully
+      </div>
+
+    </div>
+
+  </div>
+
+{% endif %}
+
+<div class="contact-form__container">
+
+  <div class="contact-form__row">
+
+    <div class="contact-form__field contact-form__field--half">
+
+      <label
+        class="contact-form__label"
+        for="contact_name"
+      >
+        Name
+      </label>
+
+      <input
+        class="contact-form__input"
+        type="text"
+        name="contact[name]"
+        id="contact_name"
+      >
+
+    </div>
+
+    <div class="contact-form__field contact-form__field--half">
+
+      <label
+        class="contact-form__label"
+        for="contact_email"
+      >
+        Email address
+      </label>
+
+      <input
+        class="contact-form__input"
+        type="email"
+        name="contact[email]"
+        id="contact_email"
+      >
+
+    </div>
+
+  </div>
+
+  <div class="contact-form__row">
+
+    <div class="contact-form__field">
+
+      <label
+        class="contact-form__label"
+        for="contact_message"
+      >
+        Message
+      </label>
+
+      <textarea
+        class="contact-form__textarea"
+        name="contact[body]"
+        id="contact_message"
+      ></textarea>
+
+    </div>
+
+  </div>
+
+  <div class="contact-form__row">
+
+    <div class="contact-form__field">
+
+      <input
+        type="submit"
+        class="contact-form__submit"
+        value="Submit message"
+      >
+
+    </div>
+
+  </div>
+
+</div>
+
+
+{% endform %}
+
+</div>
+
+{% schema %}
+{
+"name": "Contact Form",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title"
+}
+],
+"presets": [
+{
+"name": "Contact Form"
+}
+]
+}
+{% endschema %}

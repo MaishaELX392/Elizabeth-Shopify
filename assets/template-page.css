@@ -1,0 +1,28 @@
+.template-page {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 32px 0;
+}
+
+.template-page__title {
+margin: 32px 0;
+font-size: 30px;
+line-height: 36px;
+font-weight: 500;
+text-align: center;
+}
+
+.template-page__content {
+width: 100%;
+max-width: 1152px;
+margin: 0 auto;
+padding: 0 16px;
+box-sizing: border-box;
+}
+
+@media screen and (min-width: 768px) {
+.template-page__title {
+margin: 64px 0;
+}
+}

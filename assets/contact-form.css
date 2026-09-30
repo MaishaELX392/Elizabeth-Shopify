@@ -1,0 +1,147 @@
+.contact-form {
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 32px 0;
+}
+
+.contact-form__title {
+margin: 32px 0;
+font-size: 30px;
+line-height: 36px;
+font-weight: 500;
+}
+
+.contact-form__errors {
+border: 1px solid #e5e7eb;
+padding: 20px;
+}
+
+.contact-form__message {
+display: flex;
+flex-direction: row;
+align-items: center;
+width: 100%;
+margin: 12px 0;
+}
+
+.contact-form__message--error {
+color: #111827;
+}
+
+.contact-form__icon {
+display: flex;
+}
+
+.contact-form__icon--error {
+color: #ef4444;
+}
+
+.contact-form__icon--success {
+color: #22c55e;
+}
+
+.contact-form__message-text {
+margin-left: 12px;
+font-size: 14px;
+font-weight: 500;
+}
+
+.contact-form__error-list {
+padding: 0 16px;
+margin-bottom: 12px;
+margin-left: 28px;
+list-style-type: decimal;
+}
+
+.contact-form__success {
+display: flex;
+flex-direction: row;
+align-items: center;
+width: 100%;
+margin: 12px 0;
+padding: 20px;
+}
+
+.contact-form__container {
+width: 100%;
+max-width: 1152px;
+margin-left: auto;
+margin-right: auto;
+padding-left: 16px;
+padding-right: 16px;
+}
+
+.contact-form__row {
+display: flex;
+padding-left: 4px;
+padding-right: 4px;
+margin-bottom: 12px;
+}
+
+.contact-form__field {
+width: 100%;
+padding-left: 12px;
+padding-right: 12px;
+}
+
+.contact-form__field--half {
+width: 50%;
+}
+
+.contact-form__label {
+display: block;
+margin-bottom: 8px;
+color: #6b7280;
+font-size: 12px;
+line-height: 16px;
+font-weight: 500;
+text-transform: uppercase;
+}
+
+.contact-form__input,
+.contact-form__textarea {
+width: 100%;
+box-sizing: border-box;
+border: 1px solid #d1d5db;
+padding: 12px 16px;
+margin-bottom: 12px;
+color: #374151;
+font-size: 16px;
+}
+
+.contact-form__textarea {
+min-height: 120px;
+resize: vertical;
+}
+
+.contact-form__submit {
+width: 100%;
+box-sizing: border-box;
+cursor: pointer;
+border: 1px solid #111827;
+padding: 8px 16px;
+background-color: #111827;
+color: #ffffff;
+font-size: 16px;
+line-height: 24px;
+font-weight: 500;
+}
+
+.contact-form__submit:hover {
+background-color: #374151;
+}
+
+@media screen and (max-width: 767px) {
+.contact-form__title {
+margin: 32px 0;
+}
+
+.contact-form__row {
+flex-direction: column;
+}
+
+.contact-form__field--half {
+width: 100%;
+}
+}
