@@ -1,0 +1,17 @@
+.product-media__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-media__external-video {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.product-media__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

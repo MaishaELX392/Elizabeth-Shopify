@@ -1,0 +1,264 @@
+.template-product {
+width: 100%;
+max-width: 1152px;
+margin: 32px auto;
+padding: 0 16px;
+box-sizing: border-box;
+}
+
+.template-product__layout {
+display: grid;
+grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+gap: 16px;
+align-items: start;
+}
+
+.template-product__media {
+width: 100%;
+min-width: 0;
+}
+
+.template-product__desktop-media {
+display: block;
+}
+
+.template-product__desktop-media-item {
+width: 100%;
+height: 400px;
+overflow: hidden;
+padding: 8px;
+box-sizing: border-box;
+}
+
+.template-product__desktop-media-item img,
+.template-product__desktop-media-item video,
+.template-product__desktop-media-item iframe {
+display: block;
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.template-product__mobile-media {
+display: none;
+}
+
+.template-product__swiper {
+width: 100%;
+height: 360px;
+overflow: hidden;
+}
+
+.template-product__swiper .swiper-wrapper {
+height: 100%;
+}
+
+.template-product__swiper .swiper-slide {
+width: 100%;
+height: 100%;
+}
+
+.template-product__mobile-media-item {
+width: 100%;
+height: 320px;
+padding: 8px;
+box-sizing: border-box;
+overflow: hidden;
+}
+
+.template-product__mobile-media-item img,
+.template-product__mobile-media-item video,
+.template-product__mobile-media-item iframe {
+display: block;
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.template-product__swiper .swiper-button-prev,
+.template-product__swiper .swiper-button-next {
+top: auto;
+bottom: 8px;
+width: 20px;
+height: 20px;
+color: #000000;
+}
+
+.template-product__swiper .swiper-button-prev {
+left: 30px;
+}
+
+.template-product__swiper .swiper-button-next {
+right: 30px;
+}
+
+.template-product__swiper .swiper-button-prev::after,
+.template-product__swiper .swiper-button-next::after {
+font-size: 20px;
+}
+
+.template-product__swiper .swiper-pagination {
+bottom: 8px;
+}
+
+.template-product__swiper .swiper-pagination-bullet {
+width: 7px;
+height: 7px;
+}
+
+.template-product__swiper .swiper-pagination-bullet-active {
+background: #000000;
+}
+
+.template-product__information {
+position: sticky;
+top: 20px;
+height: fit-content;
+padding: 8px;
+box-sizing: border-box;
+}
+
+.template-product__block {
+margin: 16px 0;
+}
+
+.template-product__vendor {
+color: #6b7280;
+font-size: 12px;
+line-height: 18px;
+}
+
+.template-product__title {
+margin: 0;
+color: #111827;
+font-size: 30px;
+line-height: 36px;
+font-weight: 400;
+}
+
+.template-product__price-wrapper {
+display: flex;
+align-items: center;
+gap: 12px;
+flex-wrap: wrap;
+}
+
+.template-product__compare-price {
+color: #6b7280;
+font-size: 16px;
+text-decoration: line-through;
+}
+
+.template-product__price {
+color: #111827;
+font-size: 18px;
+}
+
+.template-product__sale {
+padding: 4px 20px;
+border-radius: 999px;
+background: #ef4444;
+color: #ffffff;
+font-size: 14px;
+font-weight: 700;
+}
+
+.template-product__option {
+margin: 12px 0;
+}
+
+.template-product__label {
+display: block;
+margin-bottom: 8px;
+color: #374151;
+font-size: 14px;
+}
+
+.template-product__select {
+width: 100%;
+padding: 12px;
+border: 1px solid #d1d5db;
+background: #ffffff;
+box-sizing: border-box;
+font-size: 15px;
+}
+
+.template-product__quantity-input {
+width: 100%;
+padding: 12px;
+border: 1px solid #d1d5db;
+box-sizing: border-box;
+font-size: 15px;
+}
+
+.template-product__description {
+color: #374151;
+line-height: 1.6;
+}
+
+.template-product__add-to-cart {
+width: 100%;
+padding: 16px 24px;
+border: 0;
+border-radius: 4px;
+background: #111827;
+color: #ffffff;
+font-size: 16px;
+cursor: pointer;
+}
+
+.template-product__add-to-cart:hover {
+background: #374151;
+}
+
+.template-product__add-to-cart:disabled {
+background: #9ca3af;
+cursor: not-allowed;
+}
+
+@media screen and (max-width: 767px) {
+
+.template-product {
+margin: 24px auto;
+padding: 0 12px;
+}
+
+.template-product__layout {
+display: block;
+}
+
+.template-product__desktop-media {
+display: none;
+}
+
+.template-product__mobile-media {
+display: block;
+width: 100%;
+}
+
+.template-product__swiper {
+height: 360px;
+}
+
+.template-product__mobile-media-item {
+height: 320px;
+padding: 4px;
+}
+
+.template-product__information {
+position: static;
+width: 100%;
+padding: 8px 4px;
+}
+
+.template-product__title {
+font-size: 26px;
+line-height: 32px;
+}
+
+.template-product__swiper .swiper-button-prev,
+.template-product__swiper .swiper-button-next {
+bottom: 8px;
+}
+
+}

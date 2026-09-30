@@ -1,0 +1,21 @@
+{% case media.media_type %}
+  {% when 'image' %}
+    <img
+      src="{{ media | img_url: 'large' }}"
+      alt="{{ media.preview_image.alt }}"
+      class="product-media__image"
+    >
+
+  {% when 'external_video' %}
+    {{ media | external_video_tag: class: 'product-media__external-video' }}
+
+  {% when 'video' %}
+    {{ media | video_tag: controls: true, class: 'product-media__video' }}
+
+  {% when 'model' %}
+    {{ media | model_viewer_tag }}
+
+  {% else %}
+    {{ media | media_tag }}
+
+{% endcase %}
