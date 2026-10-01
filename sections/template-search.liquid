@@ -1,0 +1,89 @@
+{{ 'template-search.css' | asset_url | stylesheet_tag }}
+
+<div class="template-search">
+  {% paginate search.results by 10 %}
+
+
+<h1 class="template-search__title">
+  Search Results
+</h1>
+
+<div class="template-search__form-wrapper">
+
+  <form
+    action="{{ routes.search_url }}"
+    method="get"
+    class="template-search__form"
+  >
+
+    <input
+      type="search"
+      name="q"
+      placeholder="Search"
+      value="{{ search.terms | escape }}"
+      class="template-search__input"
+    >
+
+    <button
+      type="submit"
+      class="template-search__button"
+    >
+      Search
+    </button>
+
+  </form>
+
+</div>
+
+{% if search.performed %}
+
+  {% if search.results.size > 0 %}
+
+    <div class="template-search__results">
+
+      <p class="template-search__results-count">
+        {{ search.results.size }} results for the search term {{ search.terms | escape }}
+      </p>
+
+      <div class="template-search__grid">
+
+        {% for item in search.results %}
+
+          {% case item.object_type %}
+
+            {% when 'product' %}
+
+              {% render 'product-card', product_product: item %}
+
+            {% else %}
+
+          {% endcase %}
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+
+  {% else %}
+
+    <div class="template-search__no-results">
+
+      <p>
+        No results found for the search term:
+        {{ search.terms | escape }}.
+        Try to use a different keyword
+      </p>
+
+    </div>
+
+  {% endif %}
+
+{% endif %}
+
+{% render 'pagination', pagination: paginate %}
+
+
+{% endpaginate %}
+
+</div>

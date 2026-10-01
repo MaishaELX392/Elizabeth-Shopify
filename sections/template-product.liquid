@@ -9,38 +9,15 @@
 
   <div class="template-product__layout">
 
+    <div class="template-product__media">
 
-<div class="template-product__media">
-
-  <div class="template-product__desktop-media">
-
-    {% for media in product.media %}
-
-      <div class="template-product__desktop-media-item">
-
-        {% render 'product-media', media: media %}
-
-      </div>
-
-    {% endfor %}
-
-  </div>
-
-  <div class="template-product__mobile-media">
-
-    <div class="swiper template-product__swiper">
-
-      <div class="swiper-wrapper">
+      <div class="template-product__desktop-media">
 
         {% for media in product.media %}
 
-          <div class="swiper-slide">
+          <div class="template-product__desktop-media-item">
 
-            <div class="template-product__mobile-media-item">
-
-              {% render 'product-media', media: media %}
-
-            </div>
+            {% render 'product-media', media: media %}
 
           </div>
 
@@ -48,200 +25,227 @@
 
       </div>
 
-      <div class="swiper-pagination"></div>
+      <div class="template-product__mobile-media">
 
-      <div class="swiper-button-prev"></div>
+        <div class="swiper template-product__swiper">
 
-      <div class="swiper-button-next"></div>
+          <div class="swiper-wrapper">
 
-    </div>
+            {% for media in product.media %}
 
-  </div>
+              <div class="swiper-slide">
 
-</div>
+                <div class="template-product__mobile-media-item">
 
-<div class="template-product__information">
-
-  {% form 'product', product %}
-
-    <input
-      type="hidden"
-      name="id"
-      value="{{ selected_variant.id }}"
-    >
-
-    {% for block in section.blocks %}
-
-      {% case block.type %}
-
-        {% when 'vendor' %}
-
-          <div
-            class="template-product__block template-product__vendor"
-            {{ block.shopify_attributes }}
-          >
-            {{ product.vendor }}
-          </div>
-
-        {% when 'title' %}
-
-          <div
-            class="template-product__block"
-            {{ block.shopify_attributes }}
-          >
-
-            <h1 class="template-product__title">
-              {{ product.title }}
-            </h1>
-
-          </div>
-
-        {% when 'price' %}
-
-          <div
-            class="template-product__block template-product__price-wrapper"
-            {{ block.shopify_attributes }}
-          >
-
-            {% if selected_variant.compare_at_price > selected_variant.price %}
-
-              <span class="template-product__compare-price">
-                {{ selected_variant.compare_at_price | money }}
-              </span>
-
-            {% endif %}
-
-            <span class="template-product__price">
-              {{ selected_variant.price | money }}
-            </span>
-
-            {% if selected_variant.compare_at_price > selected_variant.price %}
-
-              <span class="template-product__sale">
-                Sale
-              </span>
-
-            {% endif %}
-
-          </div>
-
-        {% when 'variant_selector' %}
-
-          {% unless product.has_only_default_variant %}
-
-            <div
-              class="template-product__block template-product__variants"
-              {{ block.shopify_attributes }}
-            >
-
-              {% for option in product.options_with_values %}
-
-                <div class="template-product__option">
-
-                  <label
-                    class="template-product__label"
-                    for="Option-{{ section.id }}-{{ forloop.index0 }}"
-                  >
-                    {{ option.name }}
-                  </label>
-
-                  <select
-                    name="options[{{ option.name | escape }}]"
-                    id="Option-{{ section.id }}-{{ forloop.index0 }}"
-                    class="template-product__select"
-                  >
-
-                    {% for value in option.values %}
-
-                      <option
-                        value="{{ value | escape }}"
-                        {% if option.selected_value == value %}
-                          selected
-                        {% endif %}
-                      >
-                        {{ value }}
-                      </option>
-
-                    {% endfor %}
-
-                  </select>
+                  {% render 'product-media', media: media %}
 
                 </div>
 
-              {% endfor %}
+              </div>
 
-            </div>
-
-          {% endunless %}
-
-        {% when 'quantity' %}
-
-          <div
-            class="template-product__block template-product__quantity"
-            {{ block.shopify_attributes }}
-          >
-
-            <label
-              class="template-product__label"
-              for="Quantity-{{ section.id }}"
-            >
-              Quantity
-            </label>
-
-            <input
-              type="number"
-              name="quantity"
-              id="Quantity-{{ section.id }}"
-              value="1"
-              min="1"
-              class="template-product__quantity-input"
-            >
+            {% endfor %}
 
           </div>
 
-        {% when 'description' %}
+          <div class="swiper-pagination"></div>
 
-          <div
-            class="template-product__block template-product__description"
-            {{ block.shopify_attributes }}
-          >
-            {{ product.description }}
-          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
 
-        {% when 'checkout_buttons' %}
+        </div>
 
-          <div
-            class="template-product__block template-product__buttons"
-            {{ block.shopify_attributes }}
-          >
+      </div>
 
-            <button
-              type="submit"
-              name="add"
-              class="template-product__add-to-cart"
-              {% unless selected_variant.available %}
-                disabled
+    </div>
+
+    <div class="template-product__information">
+
+      {% form 'product', product, id: 'product-form', novalidate: 'novalidate' %}
+
+        <input
+          type="hidden"
+          name="id"
+          value="{{ selected_variant.id }}"
+        >
+
+        {% for block in section.blocks %}
+
+          {% case block.type %}
+
+            {% when 'vendor' %}
+
+              <div
+                class="template-product__block template-product__vendor"
+                {{ block.shopify_attributes }}
+              >
+                {{ product.vendor }}
+              </div>
+
+            {% when 'title' %}
+
+              <div
+                class="template-product__block"
+                {{ block.shopify_attributes }}
+              >
+
+                <h1 class="template-product__title">
+                  {{ product.title }}
+                </h1>
+
+              </div>
+
+            {% when 'price' %}
+
+              <div
+                class="template-product__block template-product__price-wrapper"
+                id="price-{{ section.id }}"
+                {{ block.shopify_attributes }}
+              >
+
+                {% if selected_variant.compare_at_price > selected_variant.price %}
+
+                  <span class="template-product__compare-price">
+                    {{ selected_variant.compare_at_price | money }}
+                  </span>
+
+                {% endif %}
+
+                <span class="template-product__price">
+                  {{ selected_variant.price | money }}
+                </span>
+
+                {% if selected_variant.compare_at_price > selected_variant.price %}
+
+                  <span class="template-product__sale">
+                    Sale
+                  </span>
+
+                {% endif %}
+
+              </div>
+
+            {% when 'variant_selector' %}
+
+              {% unless product.has_only_default_variant %}
+
+                <variant-selector
+                  class="template-product__block template-product__variants"
+                  data-url="{{ product.url }}"
+                  data-section="{{ section.id }}"
+                  {{ block.shopify_attributes }}
+                >
+
+                  {% for option in product.options_with_values %}
+
+                    <div class="template-product__option">
+
+                      <label
+                        class="template-product__label"
+                        for="Option-{{ section.id }}-{{ forloop.index0 }}"
+                      >
+                        {{ option.name }}
+                      </label>
+
+                      <select
+                        name="options[{{ option.name | escape }}]"
+                        id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                        class="template-product__select"
+                      >
+
+                        {% for value in option.values %}
+
+                          <option
+                            value="{{ value | escape }}"
+                            {% if option.selected_value == value %}
+                              selected
+                            {% endif %}
+                          >
+                            {{ value }}
+                          </option>
+
+                        {% endfor %}
+
+                      </select>
+
+                    </div>
+
+                  {% endfor %}
+
+                  <script type="application/json">
+                    {{ product.variants | json }}
+                  </script>
+
+                </variant-selector>
+
               {% endunless %}
-            >
 
-              {% if selected_variant.available %}
-                Add to cart
-              {% else %}
-                Sold out
-              {% endif %}
+            {% when 'quantity' %}
 
-            </button>
+              <div
+                class="template-product__block template-product__quantity"
+                {{ block.shopify_attributes }}
+              >
 
-          </div>
+                <label
+                  class="template-product__label"
+                  for="Quantity-{{ section.id }}"
+                >
+                  Quantity
+                </label>
 
-      {% endcase %}
+                <input
+                  type="number"
+                  name="quantity"
+                  id="Quantity-{{ section.id }}"
+                  value="1"
+                  min="1"
+                  class="template-product__quantity-input"
+                >
 
-    {% endfor %}
+              </div>
 
-  {% endform %}
+            {% when 'description' %}
 
-</div>
+              <div
+                class="template-product__block template-product__description"
+                {{ block.shopify_attributes }}
+              >
+                {{ product.description }}
+              </div>
 
+            {% when 'checkout_buttons' %}
+
+              <div
+                class="template-product__block template-product__buttons"
+                {{ block.shopify_attributes }}
+              >
+
+                <button
+                  type="submit"
+                  name="add"
+                  class="template-product__add-to-cart"
+                  {% unless selected_variant.available %}
+                    disabled
+                  {% endunless %}
+                >
+
+                  {% if selected_variant.available %}
+                    Add to cart
+                  {% else %}
+                    Sold out
+                  {% endif %}
+
+                </button>
+
+              </div>
+
+          {% endcase %}
+
+        {% endfor %}
+
+      {% endform %}
+
+    </div>
 
   </div>
 
@@ -252,68 +256,174 @@
 
     const swiperElement = document.querySelector('.template-product__swiper');
 
-    if (!swiperElement || typeof Swiper === 'undefined') {
-      return;
+    if (swiperElement && typeof Swiper !== 'undefined') {
+
+      new Swiper(swiperElement, {
+        direction: 'horizontal',
+        slidesPerView: 1,
+        spaceBetween: 0,
+
+        pagination: {
+          el: swiperElement.querySelector('.swiper-pagination'),
+          clickable: true
+        },
+
+        navigation: {
+          prevEl: swiperElement.querySelector('.swiper-button-prev'),
+          nextEl: swiperElement.querySelector('.swiper-button-next')
+        }
+      });
+
     }
 
-    new Swiper(swiperElement, {
-      direction: 'horizontal',
-      slidesPerView: 1,
-      spaceBetween: 0,
-
-      pagination: {
-        el: swiperElement.querySelector('.swiper-pagination'),
-        clickable: true
-      },
-
-      navigation: {
-        prevEl: swiperElement.querySelector('.swiper-button-prev'),
-        nextEl: swiperElement.querySelector('.swiper-button-next')
-      }
-    });
-
   });
+
+  class VariantSelector extends HTMLElement {
+
+    constructor() {
+      super();
+
+      this.addEventListener('change', this.onVariantChange);
+    }
+
+    onVariantChange() {
+
+      this.getSelectedOptions();
+      this.getSelectedVariant();
+
+      if (this.currentVariant) {
+
+        this.updateURL();
+        this.updateFormID();
+        this.updatePrice();
+
+      }
+
+    }
+
+    getSelectedOptions() {
+
+      this.options = Array.from(
+        this.querySelectorAll('select'),
+        (select) => select.value
+      );
+
+    }
+
+    getVariantJSON() {
+
+      this.variantData = this.variantData || JSON.parse(
+        this.querySelector('[type="application/json"]').textContent
+      );
+
+      return this.variantData;
+
+    }
+
+    getSelectedVariant() {
+
+      this.currentVariant = this.getVariantJSON().find((variant) => {
+
+        return variant.options.every((option, index) => {
+          return this.options[index] === option;
+        });
+
+      });
+
+    }
+
+    updateURL() {
+
+      if (!this.currentVariant) return;
+
+      window.history.replaceState(
+        {},
+        '',
+        `${this.dataset.url}?variant=${this.currentVariant.id}`
+      );
+
+    }
+
+    updateFormID() {
+
+      const formInput = document
+        .querySelector('#product-form')
+        .querySelector('input[name="id"]');
+
+      formInput.value = this.currentVariant.id;
+
+    }
+
+    updatePrice() {
+
+      fetch(
+        `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`
+      )
+        .then((response) => response.text())
+        .then((responseText) => {
+
+          const id = `price-${this.dataset.section}`;
+
+          const html = new DOMParser().parseFromString(
+            responseText,
+            'text/html'
+          );
+
+          const oldPrice = document.getElementById(id);
+          const newPrice = html.getElementById(id);
+
+          if (oldPrice && newPrice) {
+            oldPrice.innerHTML = newPrice.innerHTML;
+          }
+
+        });
+
+    }
+
+  }
+
+  customElements.define('variant-selector', VariantSelector);
 </script>
 
 {% schema %}
 {
-"name": "Product",
-"blocks": [
-{
-"type": "vendor",
-"name": "Vendor",
-"limit": 1
-},
-{
-"type": "title",
-"name": "Title",
-"limit": 1
-},
-{
-"type": "price",
-"name": "Price",
-"limit": 1
-},
-{
-"type": "variant_selector",
-"name": "Variant Selector",
-"limit": 1
-},
-{
-"type": "quantity",
-"name": "Quantity",
-"limit": 1
-},
-{
-"type": "description",
-"name": "Description",
-"limit": 1
-},
-{
-"type": "checkout_buttons",
-"name": "Checkout Buttons",
-"limit": 1
-}
-]
+  "name": "Product",
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant_selector",
+      "name": "Variant Selector",
+      "limit": 1
+    },
+    {
+      "type": "quantity",
+      "name": "Quantity",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "checkout_buttons",
+      "name": "Checkout Buttons",
+      "limit": 1
+    }
+  ]
 }
 {% endschema %}

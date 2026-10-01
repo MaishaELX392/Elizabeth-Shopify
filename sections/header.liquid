@@ -2,356 +2,430 @@
 
 <div
   class="site-header"
-  x-data="{ mobileMenuOpen: false }"
+  x-data="{ mobileMenuOpen: false, searchBarOpen: false }"
 >
   <div class="site-header__container">
-    <div class="site-header__inner">
 
-      <div class="site-header__logo">
-      <h1 class="site-header__logo-title">
-  {{ section.settings.store_name }}
-</h1>
-      </div>
 
-      <!-- DESKTOP NAVIGATION -->
-      <nav class="site-header__nav">
+<div class="site-header__inner">
 
-        {% for link in section.settings.menu.links %}
+  <!-- STORE NAME -->
+  <div class="site-header__logo">
+    <h1 class="site-header__logo-title">
+      {{ section.settings.store_name }}
+    </h1>
+  </div>
+
+  <!-- MOBILE MENU BUTTON -->
+  <div class="site-header__mobile-toggle">
+    <button
+      x-on:click="mobileMenuOpen = true"
+      type="button"
+      class="site-header__mobile-button"
+      aria-label="Open menu"
+    >
+      {% render 'icon-menu' %}
+    </button>
+  </div>
+
+  <!-- DESKTOP NAVIGATION -->
+  <nav class="site-header__nav">
+
+    {% if section.settings.menu.links == blank %}
+      {% assign main_menu_linklist = linklists[section.settings.menu].links %}
+    {% else %}
+      {% assign main_menu_linklist = section.settings.menu.links %}
+    {% endif %}
+
+    {% for link in main_menu_linklist %}
+
+      {% if link.links != blank %}
+
+        {% assign link_handle = link.handle | replace: '-', '_' %}
+
+        <div
+          class="site-header__nav-item"
+          x-data="{ {{ link_handle }}: false }"
+        >
+
+          <button
+            type="button"
+            x-on:click="{{ link_handle }} = !{{ link_handle }}"
+            :aria-expanded="{{ link_handle }}"
+            class="site-header__nav-button"
+          >
+            <span>{{ link.title }}</span>
+
+            {% render 'icon-dropdown' %}
+          </button>
+
           <div
-            class="site-header__nav-item"
-            x-data="{ open: false }"
+            x-show="{{ link_handle }}"
+            x-cloak
+            @click.outside="{{ link_handle }} = false"
+            class="site-header__dropdown"
           >
 
-            {% if link.links != blank %}
+            <div class="site-header__dropdown-wrapper">
+
+              <div class="site-header__dropdown-content">
+
+                {% for childlink in link.links %}
+
+                  <a
+                    href="{{ childlink.url }}"
+                    class="site-header__dropdown-link"
+                  >
+
+                    <div class="site-header__dropdown-content-inner">
+                      <p>
+                        {{ childlink.title }}
+                      </p>
+                    </div>
+
+                  </a>
+
+                {% endfor %}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      {% else %}
+
+        <a
+          href="{{ link.url }}"
+          class="site-header__nav-link"
+        >
+          {{ link.title }}
+        </a>
+
+      {% endif %}
+
+    {% endfor %}
+
+  </nav>
+
+  <!-- DESKTOP ACTIONS -->
+  <div class="site-header__actions">
+
+    <!-- SEARCH -->
+    <button
+      x-on:click="searchBarOpen = true"
+      type="button"
+      class="site-header__action-button"
+      aria-label="Search"
+    >
+      {% render 'icon-search' %}
+    </button>
+
+    <!-- CART -->
+    <a
+      href="{{ routes.cart_url }}"
+      class="site-header__action-link"
+      aria-label="Cart"
+    >
+      {% render 'icon-shopping-bag' %}
+    </a>
+
+    <!-- CUSTOMER -->
+    {% if shop.customer_accounts_enabled %}
+
+      {% if customer %}
+
+        <a
+          href="{{ routes.account_url }}"
+          class="site-header__action-link"
+        >
+          Account
+        </a>
+
+        {{ 'Log out'
+          | customer_logout_link
+          | replace: '<a', '<a class="site-header__action-link"'
+        }}
+
+      {% else %}
+
+        {% if section.settings.show_login %}
+          {{ 'Log in'
+            | customer_login_link
+            | replace: '<a', '<a class="site-header__action-link"'
+          }}
+        {% endif %}
+
+        {% if section.settings.show_register %}
+          {{ 'Register'
+            | customer_register_link
+            | replace: '<a', '<a class="site-header__action-link"'
+          }}
+        {% endif %}
+
+      {% endif %}
+
+    {% endif %}
+
+  </div>
+
+</div>
+
+
+  </div>
+
+  <!-- MOBILE MENU -->
+
+  <div
+    x-show="mobileMenuOpen"
+    x-cloak
+    class="site-header__mobile-menu"
+  >
+
+
+<div class="site-header__mobile-menu-inner">
+
+  <div class="site-header__mobile-menu-content">
+
+    <!-- MOBILE MENU HEADER -->
+    <div class="site-header__mobile-menu-header">
+
+      <div>
+        <h1 class="site-header__mobile-menu-title">
+          {{ section.settings.mobile_menu_title }}
+        </h1>
+      </div>
+
+      <div class="site-header__mobile-close-wrapper">
+
+        <button
+          x-on:click="mobileMenuOpen = false"
+          type="button"
+          class="site-header__mobile-close"
+          aria-label="Close menu"
+        >
+          {% render 'icon-close' %}
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- MOBILE NAVIGATION -->
+    <div class="site-header__mobile-navigation">
+
+      <nav class="site-header__mobile-nav">
+
+        {% if section.settings.menu.links == blank %}
+          {% assign main_menu_linklist = linklists[section.settings.menu].links %}
+        {% else %}
+          {% assign main_menu_linklist = section.settings.menu.links %}
+        {% endif %}
+
+        {% for link in main_menu_linklist %}
+
+          {% if link.links != blank %}
+
+            {% assign mobile_link_handle = link.handle | replace: '-', '_' %}
+
+            <div
+              class="site-header__mobile-nav-group"
+              x-data="{ {{ mobile_link_handle }}: false }"
+            >
 
               <button
+                x-on:click="{{ mobile_link_handle }} = !{{ mobile_link_handle }}"
                 type="button"
-                class="site-header__nav-button"
-                @click="open = !open"
-                :aria-expanded="open"
+                class="site-header__mobile-nav-parent"
               >
-                <span>{{ link.title }}</span>
 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="site-header__nav-icon"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
+                <span>
+                  {{ link.title }}
+                </span>
+
+                {% render 'icon-dropdown' %}
+
               </button>
 
               <div
-                class="site-header__dropdown"
-                x-show="open"
+                x-show="{{ mobile_link_handle }}"
                 x-cloak
-                @click.outside="open = false"
+                class="site-header__mobile-submenu"
               >
-                <div>
-                  <div>
-                    {% for child_link in link.links %}
-                      <a
-                        href="{{ child_link.url }}"
-                        class="site-header__dropdown-link"
-                      >
-                        <div class="site-header__dropdown-content">
-                          <p>{{ child_link.title }}</p>
-                        </div>
-                      </a>
-                    {% endfor %}
-                  </div>
-                </div>
+
+                {% for childlink in link.links %}
+
+                  <a
+                    href="{{ childlink.url }}"
+                    class="site-header__mobile-nav-link"
+                  >
+                    {{ childlink.title }}
+                  </a>
+
+                {% endfor %}
+
               </div>
 
-            {% else %}
+            </div>
 
-              <a
-                href="{{ link.url }}"
-                class="site-header__nav-link"
-              >
-                {{ link.title }}
-              </a>
+          {% else %}
 
-            {% endif %}
+            <a
+              href="{{ link.url }}"
+              class="site-header__mobile-nav-link"
+            >
+              {{ link.title }}
+            </a>
 
-          </div>
+          {% endif %}
+
         {% endfor %}
 
       </nav>
 
-      <!-- MOBILE MENU BUTTON -->
-      <div class="site-header__mobile-toggle">
-        <button
-          type="button"
-          class="site-header__mobile-button"
-          @click="mobileMenuOpen = true"
-          :aria-expanded="mobileMenuOpen"
-          aria-label="Open menu"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="site-header__mobile-icon"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <!-- DESKTOP ACTIONS -->
-      <div class="site-header__actions">
-
-        <a
-          href="{{ routes.cart_url }}"
-          class="site-header__action-link"
-          aria-label="Cart"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="site-header__icon"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974a1.125 1.125 0 0 1 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1-.75 0Z"
-            />
-          </svg>
-        </a>
-
-  {% if shop.customer_accounts_enabled %}
-
-  {% if section.settings.show_login %}
-    <a
-      href="{{ routes.account_login_url }}"
-      class="site-header__action-link"
-    >
-      Login
-    </a>
-  {% endif %}
-
-  {% if section.settings.show_register %}
-    <a
-      href="{{ routes.account_register_url }}"
-      class="site-header__action-link"
-    >
-      Register
-    </a>
-  {% endif %}
-
-{% endif %}
-
-      </div>
-
     </div>
+
   </div>
 
-  <!-- MOBILE MENU -->
+</div>
+
+  </div>
+
+  <!-- SEARCH BAR -->
+
   <div
-    class="site-header__mobile-menu"
-    x-show="mobileMenuOpen"
+    x-show="searchBarOpen"
     x-cloak
+    class="site-header__search"
   >
-    <div class="site-header__mobile-menu-inner">
 
-      <div class="site-header__mobile-menu-content">
 
-        <!-- MOBILE MENU HEADER -->
-        <div class="site-header__mobile-menu-header">
+<button
+  type="button"
+  x-on:click="searchBarOpen = false"
+  class="site-header__search-close"
+  aria-label="Close search"
+>
+  {% render 'icon-close' %}
+</button>
 
-          <div>
-          <h1 class="site-header__mobile-menu-title">
-  {{ section.settings.mobile_menu_title }}
-</h1>
-            </h1>
-          </div>
+<div class="site-header__search-inner">
 
-          <div class="site-header__mobile-close-wrapper">
-            <button
-              type="button"
-              class="site-header__mobile-close"
-              @click="mobileMenuOpen = false"
-              aria-label="Close menu"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="site-header__mobile-close-icon"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
+  <form
+    action="{{ routes.search_url }}"
+    method="get"
+    class="site-header__search-form"
+  >
 
-        </div>
+    <div class="site-header__search-field">
 
-        <!-- MOBILE NAVIGATION -->
-        <div class="site-header__mobile-navigation">
+      <input
+        type="search"
+        name="q"
+        placeholder="Search"
+        class="site-header__search-input"
+        autocomplete="off"
+      >
 
-          <nav class="site-header__mobile-nav">
-
-            {% for link in section.settings.menu.links %}
-
-              {% if link.links != blank %}
-
-                <div class="site-header__mobile-nav-group">
-
-                  <button
-                    type="button"
-                    class="site-header__mobile-nav-parent"
-                  >
-                    <span>{{ link.title }}</span>
-                  </button>
-
-                  <div class="site-header__mobile-submenu">
-
-                    {% for child_link in link.links %}
-
-                      <a
-                        href="{{ child_link.url }}"
-                        class="site-header__mobile-nav-link"
-                      >
-                        <span>
-                          {{ child_link.title }}
-                        </span>
-                      </a>
-
-                    {% endfor %}
-
-                  </div>
-
-                </div>
-
-              {% else %}
-
-                <a
-                  href="{{ link.url }}"
-                  class="site-header__mobile-nav-link"
-                >
-                  {{ link.title }}
-                </a>
-
-              {% endif %}
-
-            {% endfor %}
-
-          </nav>
-
-        </div>
-
-      </div>
+      <button
+        type="submit"
+        class="site-header__search-submit"
+        aria-label="Submit search"
+      >
+        {% render 'icon-search' %}
+      </button>
 
     </div>
+
+  </form>
+
+</div>
+
+
   </div>
 
 </div>
 
 {% schema %}
 {
-  "name": "Header",
-  "tag": "header",
-  "class": "site-header-section",
-  "limit": 1,
+"name": "Header",
+"tag": "header",
+"class": "site-header-section",
+"limit": 1,
 
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Menu",
-      "default": "main-menu"
-    },
-    {
-      "type": "text",
-      "id": "store_name",
-      "label": "Store name",
-      "default": "STORE NAME"
-    },
-    {
-      "type": "text",
-      "id": "mobile_menu_title",
-      "label": "Mobile menu title",
-      "default": "MENU"
-    },
-    {
-  "type": "checkbox",
-  "id": "show_login",
-  "label": "Show Login",
-  "default": true
+"settings": [
+{
+"type": "link_list",
+"id": "menu",
+"label": "Menu",
+"default": "main-menu"
 },
 {
-  "type": "checkbox",
-  "id": "show_register",
-  "label": "Show Register",
-  "default": true
+"type": "text",
+"id": "store_name",
+"label": "Store name",
+"default": "STORE NAME"
+},
+{
+"type": "text",
+"id": "mobile_menu_title",
+"label": "Mobile menu title",
+"default": "MENU"
+},
+{
+"type": "checkbox",
+"id": "show_login",
+"label": "Show Login",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "show_register",
+"label": "Show Register",
+"default": true
 }
-  ],
+],
 
-  "blocks": [
-    {
-      "type": "header_link",
-      "name": "Header link",
-      "limit": 5,
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Header link"
-        },
-        {
-          "type": "url",
-          "id": "url",
-          "label": "Link"
-        }
-      ]
-    }
-  ],
+"blocks": [
+{
+"type": "header_link",
+"name": "Header link",
+"limit": 5,
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Header link"
+},
+{
+"type": "url",
+"id": "url",
+"label": "Link"
+}
+]
+}
+],
 
-  "max_blocks": 5,
+"max_blocks": 5,
 
-  "presets": [
-    {
-      "name": "Header"
-    }
-  ],
+"presets": [
+{
+"name": "Header"
+}
+],
 
-  "locales": {
-    "en": {
-      "store_name": "STORE NAME",
-      "mobile_menu_title": "MENU"
-    },
-    "fr": {
-      "store_name": "NOM DE LA BOUTIQUE",
-      "mobile_menu_title": "MENU"
-    }
-  }
+"locales": {
+"en": {
+"store_name": "STORE NAME",
+"mobile_menu_title": "MENU"
+},
+"fr": {
+"store_name": "NOM DE LA BOUTIQUE",
+"mobile_menu_title": "MENU"
+}
+}
 }
 {% endschema %}
