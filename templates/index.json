@@ -21,7 +21,7 @@
         "heading": "Experience True Luxury",
         "text": "<p>Discover our latest arrivals designed for high style and ultimate comfort.</p>",
         "button_label": "Shop Now",
-        "button_link": "",
+        "button_link": "shopify://collections",
         "text_alignment": "center"
       }
     },
