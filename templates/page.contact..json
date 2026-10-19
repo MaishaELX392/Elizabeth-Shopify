@@ -2,10 +2,10 @@
   
   "sections": {
     "template-page": {
-      "type": "template-page"
+      "type": "template-contact"
     }
   },
   "order": [
-    "template-page"
+    "template-contact"
   ]
 }

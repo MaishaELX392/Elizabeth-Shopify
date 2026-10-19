@@ -1,0 +1,194 @@
+{{ 'template-contact.css' | asset_url | stylesheet_tag }}
+
+<div class="template-contact">
+  <div class="template-contact__container">
+    <h1 class="template-contact__title">
+      {% if section.settings.title != blank %}
+        {{ section.settings.title | escape }}
+      {% else %}
+        {{ page.title }}
+      {% endif %}
+    </h1>
+
+    {% if page.content != blank %}
+      <div class="template-contact__content">
+        {{ page.content }}
+      </div>
+    {% endif %}
+
+    <div class="template-contact__grid">
+      <!-- Contact Info Section -->
+      <div class="template-contact__info">
+        {% if section.settings.info_heading != blank %}
+          <h2 class="template-contact__subtitle">{{ section.settings.info_heading | escape }}</h2>
+        {% endif %}
+
+        {% if section.settings.info_text != blank %}
+          <div class="template-contact__text">{{ section.settings.info_text }}</div>
+        {% endif %}
+
+        <div class="template-contact__details">
+          {% if section.settings.phone != blank %}
+            <div class="contact-detail-item">
+              <strong>Phone:</strong>
+              <a href="tel:{{ section.settings.phone | escape }}">{{ section.settings.phone | escape }}</a>
+            </div>
+          {% endif %}
+
+          {% if section.settings.email != blank %}
+            <div class="contact-detail-item">
+              <strong>Email:</strong>
+              <a href="mailto:{{ section.settings.email | escape }}">{{ section.settings.email | escape }}</a>
+            </div>
+          {% endif %}
+
+          {% if section.settings.address != blank %}
+            <div class="contact-detail-item">
+              <strong>Address:</strong>
+              <span>{{ section.settings.address | escape }}</span>
+            </div>
+          {% endif %}
+
+          {% if section.settings.hours != blank %}
+            <div class="contact-detail-item">
+              <strong>Hours:</strong>
+              <span>{{ section.settings.hours | escape }}</span>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="template-contact__form-wrapper">
+        {% form 'contact', id: 'ContactForm', class: 'contact-form' %}
+          {% if form.posted_successfully? %}
+            <p class="contact-form__message contact-form__message--success" tabindex="-1" autofocus>
+              Thanks for contacting us! We'll get back to you as soon as possible.
+            </p>
+          {%- elsif form.errors -%}
+            <div class="contact-form__message contact-form__message--error">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          <div class="contact-form__field">
+            <label for="ContactForm-name" class="contact-form__label">Name</label>
+            <input
+              type="text"
+              id="ContactForm-name"
+              name="contact[name]"
+              class="contact-form__input"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="Your Name"
+              required
+            >
+          </div>
+
+          <div class="contact-form__field">
+            <label for="ContactForm-email" class="contact-form__label">Email <span aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="ContactForm-email"
+              name="contact[email]"
+              class="contact-form__input"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              placeholder="your.email@example.com"
+              spellcheck="false"
+              autocomplete="email"
+              autocorrect="off"
+              required
+            >
+          </div>
+
+          <div class="contact-form__field">
+            <label for="ContactForm-phone" class="contact-form__label">Phone Number</label>
+            <input
+              type="tel"
+              id="ContactForm-phone"
+              name="contact[phone]"
+              class="contact-form__input"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              placeholder="Your Phone Number"
+            >
+          </div>
+
+          <div class="contact-form__field">
+            <label for="ContactForm-body" class="contact-form__label">Message <span aria-hidden="true">*</span></label>
+            <textarea
+              rows="5"
+              id="ContactForm-body"
+              name="contact[body]"
+              class="contact-form__textarea"
+              placeholder="How can we help you?"
+              required
+            >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </div>
+
+          <button type="submit" class="contact-form__submit">
+            Send Message
+          </button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "tag": "section",
+  "class": "section-template-contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+    },
+    {
+      "type": "header",
+      "content": "Contact Info"
+    },
+    {
+      "type": "text",
+      "id": "info_heading",
+      "label": "Info Heading",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "richtext",
+      "id": "info_text",
+      "label": "Info Text",
+      "default": "<p>Have questions about your order or our products? Send us a message and our support team will respond within 24 hours.</p>"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone Number",
+      "default": "+1 (555) 000-0000"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email Address",
+      "default": "support@example.com"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Store Address",
+      "default": "123 Fashion Street, Suite 100, New York, NY 10001"
+    },
+    {
+      "type": "text",
+      "id": "hours",
+      "label": "Operating Hours",
+      "default": "Mon - Fri: 9:00 AM - 6:00 PM EST"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,166 @@
+{{ 'customer-reviews.css' | asset_url | stylesheet_tag }}
+
+<div class="reviews-section">
+  <div class="reviews-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="reviews-title">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="reviews-subtitle">{{ section.settings.subheading | escape }}</p>
+    {% endif %}
+
+    <div class="reviews-grid">
+      {% for block in section.blocks %}
+        <div class="review-card" {{ block.shopify_attributes }}>
+          <!-- Star Rating -->
+          <div class="review-stars" aria-label="Rating: {{ block.settings.rating }} out of 5 stars">
+            {% for i in (1..5) %}
+              {% if i <= block.settings.rating %}
+                <span class="star star--filled">★</span>
+              {% else %}
+                <span class="star star--empty">☆</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <!-- Title & Review Text -->
+          {% if block.settings.title != blank %}
+            <h3 class="review-card-title">{{ block.settings.title | escape }}</h3>
+          {% endif %}
+
+          {% if block.settings.review != blank %}
+            <p class="review-card-text">“{{ block.settings.review | escape }}”</p>
+          {% endif %}
+
+          <!-- Author Info -->
+          <div class="review-author">
+            {% if block.settings.author_image != blank %}
+              <img
+                src="{{ block.settings.author_image | image_url: width: 120 }}"
+                alt="{{ block.settings.author_name | escape }}"
+                class="review-author-avatar"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="review-author-initial">
+                {{ block.settings.author_name | slice: 0 | upcase }}
+              </div>
+            {% endif %}
+
+            <div class="review-author-details">
+              <span class="review-author-name">{{ block.settings.author_name | escape }}</span>
+              {% if block.settings.verified %}
+                <span class="review-verified-badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  Verified Customer
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "tag": "section",
+  "class": "section-customer-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Read real stories and experiences from verified buyers"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review Block",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Star Rating"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review Title",
+          "default": "Exceptional Quality!"
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review Text",
+          "default": "The product exceeded my expectations. The craftsmanship and speed of delivery were top-tier!"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Sarah Jenkins"
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author image"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show Verified Badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "title": "Unmatched Quality",
+            "review": "The product exceeded my expectations. The craftsmanship and speed of delivery were top-tier!",
+            "author_name": "Emma W."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Exceeded Expectations",
+            "review": "Fantastic service from start to finish. I will definitely be ordering again in the near future.",
+            "author_name": "Marcus B."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Will Order Again!",
+            "review": "The packaging was beautiful and the item was exactly as described. Highly recommended!",
+            "author_name": "Sophia L."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
