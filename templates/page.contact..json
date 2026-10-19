@@ -13,7 +13,7 @@
       "type": "template-contact",
       "name": "Contact Page",
       "settings": {
-        "title": "",
+        "title": "Contact Us",
         "info_heading": "Get in Touch",
         "info_text": "<p>Have questions about your order or our products? Send us a message and our support team will respond within 24 hours.</p>",
         "phone": "+1 (555) 000-0000",
