@@ -9,6 +9,22 @@
  */
 {
   "sections": {
+    "hero_banner_khf66g": {
+      "type": "hero-banner",
+      "name": "Hero Banner",
+      "settings": {
+        "media_type": "image",
+        "image": "shopify://shop_images/forest-leaves-changing-in-fall.jpg",
+        "banner_height": "medium",
+        "overlay_opacity": 40,
+        "subheading": "New Collection",
+        "heading": "Experience True Luxury",
+        "text": "<p>Discover our latest arrivals designed for high style and ultimate comfort.</p>",
+        "button_label": "Shop Now",
+        "button_link": "",
+        "text_alignment": "center"
+      }
+    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
@@ -21,6 +37,7 @@
     }
   },
   "order": [
+    "hero_banner_khf66g",
     "featured-collection"
   ]
 }
