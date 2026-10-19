@@ -1,0 +1,81 @@
+.announcement-bar {
+  width: 100%;
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.announcement-bar__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.announcement-bar__message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+/* Single block (static display, no animation) */
+.announcement-bar__count-1 .announcement-bar__message {
+  opacity: 1;
+}
+
+/* Two blocks (4s total loop, 2s visible each) */
+.announcement-bar__count-2 .announcement-bar__message {
+  animation: fadeAnnouncements2 4s infinite ease-in-out;
+}
+
+@keyframes fadeAnnouncements2 {
+  0% {
+    opacity: 0;
+  }
+  10%, 45% {
+    opacity: 1;
+  }
+  55%, 100% {
+    opacity: 0;
+  }
+}
+
+.announcement-bar__count-3 .announcement-bar__message {
+  animation: fadeAnnouncements3 6s infinite ease-in-out;
+}
+
+@keyframes fadeAnnouncements3 {
+  0% {
+    opacity: 0;
+  }
+  5%, 30% {
+    opacity: 1;
+  }
+  38%, 100% {
+    opacity: 0;
+  }
+}
+
+.announcement-bar__message a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.announcement-bar__message a:hover {
+  opacity: 0.8;
+}

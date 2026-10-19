@@ -1,0 +1,90 @@
+{{ 'announcement-bar.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.show_announcement and section.blocks.size > 0 %}
+  <div
+    class="announcement-bar"
+    style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};"
+  >
+    <div class="announcement-bar__container announcement-bar__count-{{ section.blocks.size }}">
+      {% for block in section.blocks %}
+        <div
+          class="announcement-bar__message"
+          style="animation-delay: {{ forloop.index0 | times: 2 }}s;"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" style="color: {{ section.settings.text_color }};">
+              {{ block.settings.text | escape }}
+            </a>
+          {% else %}
+            <span>{{ block.settings.text | escape }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#111827"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping to Bangladesh on orders over Tk32,845.00"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar",
+      "blocks": [
+        {
+          "type": "announcement",
+          "settings": {
+            "text": "Free shipping to Bangladesh on orders over Tk32,845.00"
+          }
+        },
+        {
+          "type": "announcement",
+          "settings": {
+            "text": "Sign up now and get 10% off your first purchase!"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
