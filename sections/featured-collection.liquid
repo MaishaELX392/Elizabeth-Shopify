@@ -1,70 +1,165 @@
 {{ 'featured-collection.css' | asset_url | stylesheet_tag }}
 
-<div class="featured-collection">
+<div class="featured-collection-section">
+  <div class="featured-collection-container">
+    {% if section.settings.title != blank %}
+      <h2 class="featured-collection-title">{{ section.settings.title | escape }}</h2>
+    {% endif %}
 
-  <h1 class="featured-collection__title">
-    {{ section.settings.title }}
-  </h1>
+    {% assign featured_collection = collections[section.settings.collection] %}
 
-  <div class="featured-collection__container">
+    <div class="swiper featured-swiper-{{ section.id }}">
+      <div class="swiper-wrapper">
+        {% if featured_collection != blank and featured_collection.products_count > 0 %}
+          {% for product in featured_collection.products limit: section.settings.products_to_show %}
+            <div class="swiper-slide">
+              <div class="product-card">
+                <a href="{{ product.url }}" class="product-card-image-link">
+                  {% if product.featured_media %}
+                    <img
+                      src="{{ product.featured_media | image_url: width: 600 }}"
+                      alt="{{ product.featured_media.alt | escape }}"
+                      class="product-card-image"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag: 'product-card-placeholder' }}
+                  {% endif %}
+                </a>
 
-    <div class="featured-collection__grid">
+                <div class="product-card-info">
+                  <h3 class="product-card-title">
+                    <a href="{{ product.url }}">{{ product.title }}</a>
+                  </h3>
 
-      {% if section.settings.featured_collection != blank %}
+                  <div class="product-card-price">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="price-sale">{{ product.price | money }}</span>
+                      <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                    {% else %}
+                      <span class="price-regular">{{ product.price | money }}</span>
+                    {% endif %}
+                  </div>
 
-        {% for product in section.settings.featured_collection.products limit: section.settings.number_of_products_to_show %}
-
-          {% render 'product-card', product_product: product %}
-
-        {% else %}
-
-          {% for item in (1..section.settings.number_of_products_to_show) %}
-
-            {% render 'product-card-placeholder' %}
-
+                  <form method="post" action="/cart/add">
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    <button
+                      type="submit"
+                      class="product-card-button"
+                      {% unless product.available %}disabled{% endunless %}
+                    >
+                      {% if product.available %}
+                        Add to Cart
+                      {% else %}
+                        Sold Out
+                      {% endif %}
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
           {% endfor %}
+        {% else %}
+          {% for i in (1..section.settings.products_to_show) %}
+            <div class="swiper-slide">
+              <div class="product-card">
+                <div class="product-card-image-link">
+                  {{ 'product-1' | placeholder_svg_tag: 'product-card-placeholder' }}
+                </div>
+                <div class="product-card-info">
+                  <h3 class="product-card-title">Sample Product {{ i }}</h3>
+                  <div class="product-card-price">
+                    <span class="price-regular">$19.99</span>
+                  </div>
+                  <button type="button" class="product-card-button">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
 
-        {% endfor %}
-
-      {% else %}
-
-        {% for item in (1..section.settings.number_of_products_to_show) %}
-
-          {% render 'product-card-placeholder' %}
-
-        {% endfor %}
-
+      {% if section.settings.show_navigation %}
+        <div class="swiper-button-prev featured-swiper-prev-{{ section.id }}"></div>
+        <div class="swiper-button-next featured-swiper-next-{{ section.id }}"></div>
       {% endif %}
 
+      {% if section.settings.show_pagination %}
+        <div class="swiper-pagination featured-swiper-pagination-{{ section.id }}"></div>
+      {% endif %}
     </div>
-
   </div>
-
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new Swiper('.featured-swiper-{{ section.id }}', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: false,
+      navigation: {
+        nextEl: '.featured-swiper-next-{{ section.id }}',
+        prevEl: '.featured-swiper-prev-{{ section.id }}',
+      },
+      pagination: {
+        el: '.featured-swiper-pagination-{{ section.id }}',
+        clickable: true,
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 24,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 28,
+        },
+      },
+    });
+  });
+</script>
 
 {% schema %}
 {
   "name": "Featured Collection",
+  "tag": "section",
+  "class": "section-featured-collection",
   "settings": [
     {
       "type": "text",
       "id": "title",
-      "default": "Featured Collection",
-      "label": "Title"
+      "label": "Heading",
+      "default": "Featured Collection"
     },
     {
       "type": "collection",
-      "id": "featured_collection",
+      "id": "collection",
       "label": "Collection"
     },
     {
       "type": "range",
-      "id": "number_of_products_to_show",
+      "id": "products_to_show",
       "min": 4,
-      "max": 12,
+      "max": 16,
       "step": 1,
-      "default": 4,
-      "label": "Number of products to show"
+      "default": 8,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show Next/Prev Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Dots Pagination",
+      "default": true
     }
   ],
   "presets": [

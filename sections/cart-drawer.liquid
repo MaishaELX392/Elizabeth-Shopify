@@ -1,0 +1,198 @@
+<div class="cart-drawer" data-cart-drawer>
+  <div class="cart-drawer__overlay" data-cart-close></div>
+
+  <div class="cart-drawer__content">
+
+    <div class="cart-drawer__header">
+      <h3 class="cart-drawer__header-title">Your cart</h3>
+
+      <div class="cart-drawer__header-right">
+        <div class="cart-drawer__total-items">
+          {{ cart.item_count }} items
+        </div>
+
+        <button
+          type="button"
+          class="cart-drawer__close-icon"
+          data-cart-close
+          aria-label="Close cart"
+        >
+          {% render 'icon-close' %}
+        </button>
+      </div>
+    </div>
+
+    <div class="cart-drawer__body">
+
+      {% if cart.item_count > 0 %}
+
+        <ul class="cart-drawer__line-items">
+
+          {% for item in cart.items %}
+
+            <li
+              class="cart-drawer__line-item"
+              data-cart-item
+              data-line="{{ forloop.index }}"
+            >
+
+              <a
+                class="cart-drawer__line-item-image-wrapper"
+                href="{{ item.url }}"
+              >
+                {% if item.image %}
+                  <img
+                    src="{{ item.image | image_url: width: 100 }}"
+                    alt="{{ item.image.alt | escape }}"
+                    width="100"
+                    height="100"
+                  >
+                {% endif %}
+              </a>
+
+              <div class="cart-drawer__line-item-copy">
+
+                <div class="cart-drawer__line-item-title">
+                  {{ item.product.title }}
+                </div>
+
+                {% unless item.product.has_only_default_variant %}
+                  <div class="cart-drawer__line-item-variant-title">
+                    {{ item.variant.title }}
+                  </div>
+                {% endunless %}
+
+                <div class="cart-drawer__line-item-qty">
+
+                  <button
+                    type="button"
+                    data-quantity-minus
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+
+                  <input
+                    type="text"
+                    value="{{ item.quantity }}"
+                    readonly
+                    data-cart-quantity
+                    aria-label="Quantity"
+                  >
+
+                  <button
+                    type="button"
+                    data-quantity-plus
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+
+                </div>
+
+              </div>
+
+              <div class="cart-drawer__line-item-right">
+
+                <div class="cart-drawer__line-item-final-price">
+                  {{ item.final_line_price | money }}
+                </div>
+
+                <button
+                  type="button"
+                  class="cart-drawer__line-item-remove"
+                  data-cart-remove
+                  aria-label="Remove {{ item.product.title }}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    width="16"
+                    class="cart-drawer__trash-icon"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                </button>
+
+              </div>
+
+            </li>
+
+          {% endfor %}
+
+        </ul>
+
+      {% else %}
+
+        <div class="cart-drawer__empty">
+          <p>Your cart is empty.</p>
+        </div>
+
+      {% endif %}
+
+    </div>
+
+    {% if cart.item_count > 0 %}
+
+      <div class="cart-drawer__footer">
+
+        <div class="cart-drawer__clear-cart">
+          <button
+            type="button"
+            data-clear-cart
+          >
+            Clear Cart
+          </button>
+        </div>
+
+        <div class="cart-drawer__subtotal">
+          <span class="cart-drawer__subtotal-label">
+            Subtotal:
+          </span>
+
+          <span class="cart-drawer__subtotal-price">
+            {{ cart.total_price | money }}
+          </span>
+        </div>
+
+        <div class="cart-drawer__footer-buttons">
+
+          <a
+            href="{{ routes.cart_url }}"
+            class="cart-drawer__button"
+          >
+            View cart
+          </a>
+
+      {% form 'cart', cart %}
+  <button
+    type="submit"
+    name="checkout"
+    class="cart-drawer__button cart-drawer__button--black"
+  >
+    Checkout
+  </button>
+{% endform %}
+
+        </div>
+
+      </div>
+
+    {% endif %}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}

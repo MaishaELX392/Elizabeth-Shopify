@@ -1,0 +1,32 @@
+{{ 'button.css' | asset_url | stylesheet_tag }}
+<a
+  href="{{ block.settings.url }}"
+  class="button-block"
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.text }}
+</a>
+
+{% schema %}
+{
+  "name": "Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Button text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Button"
+    }
+  ]
+}
+{% endschema %}

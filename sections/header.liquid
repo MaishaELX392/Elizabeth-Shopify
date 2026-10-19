@@ -1,4 +1,6 @@
 {{ 'header.css' | asset_url | stylesheet_tag }}
+{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
 
 <div
   class="site-header"
@@ -124,13 +126,21 @@
     </button>
 
     <!-- CART -->
-    <a
-      href="{{ routes.cart_url }}"
-      class="site-header__action-link"
-      aria-label="Cart"
-    >
-      {% render 'icon-shopping-bag' %}
-    </a>
+
+<a
+  href="{{ routes.cart_url }}"
+  class="site-header__action-link site-header__cart"
+  aria-label="Cart"
+  data-cart-trigger
+>
+  {% render 'icon-shopping-bag' %}
+
+  <sup data-cart-count>
+    {{ cart.item_count }}
+  </sup>
+</a>
+
+
 
     <!-- CUSTOMER -->
     {% if shop.customer_accounts_enabled %}
@@ -347,6 +357,7 @@
   </div>
 
 </div>
+
 
 {% schema %}
 {

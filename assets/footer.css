@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Footer Component Styles
+   ========================================================================== */
+
+.site-footer {
+  background-color: #111827;
+  color: #9ca3af;
+  padding: 60px 20px 24px 20px;
+  font-family: inherit;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Grid Layout */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 40px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid #1f2937;
+}
+
+@media (min-width: 640px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Column Headings */
+.footer-heading {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 18px 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Menu Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+/* Text Block */
+.footer-text-content p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Newsletter Form */
+.footer-newsletter-text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.newsletter-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.newsletter-input {
+  flex-grow: 1;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  background-color: #1f2937;
+  color: #ffffff;
+  outline: none;
+}
+
+.newsletter-input:focus {
+  border-color: #60a5fa;
+}
+
+.newsletter-submit {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.newsletter-submit:hover {
+  background-color: #1d4ed8;
+}
+
+.newsletter-success {
+  color: #10b981;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* Footer Bottom Bar */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  font-size: 13px;
+}
+
+@media (min-width: 640px) {
+  .footer-bottom {
+    flex-direction: row;
+  }
+}
+
+.copyright-text {
+  margin: 0;
+}
+
+.payment-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.payment-icon svg {
+  height: 24px;
+  width: auto;
+}

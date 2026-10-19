@@ -1,0 +1,16 @@
+.content-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.content-section__text {
+  margin: 30px 0;
+}
+
+.content-section__text h2 {
+  margin-bottom: 10px;
+}
+
+.content-section__text p {
+  margin: 0;
+}

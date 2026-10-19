@@ -1,0 +1,188 @@
+{{ 'hero-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="hero-banner hero-banner-{{ section.id }} hero-height-{{ section.settings.banner_height }}">
+  <!-- Background Media (Image or Video) -->
+  <div class="hero-banner-media">
+    {% if section.settings.media_type == 'video' %}
+      {% if section.settings.video != blank %}
+        {{
+          section.settings.video
+          | video_tag:
+            autoplay: true,
+            loop: true,
+            muted: true,
+            controls: false,
+            playsinline: true,
+            class: 'hero-banner-video'
+        }}
+      {% else %}
+        <!-- Video Placeholder / Fallback -->
+        <div class="hero-media-placeholder">
+          <p>Please select a video from your media library.</p>
+        </div>
+      {% endif %}
+    {% else %}
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 2000 }}"
+          alt="{{ section.settings.image.alt | escape }}"
+          class="hero-banner-image"
+          loading="eager"
+        >
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-banner-placeholder' }}
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <!-- Overlay -->
+  <div class="hero-banner-overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+
+  <!-- Content -->
+  <div class="hero-banner-content-wrapper hero-align-{{ section.settings.text_alignment }}">
+    <div class="hero-banner-content">
+      {% if section.settings.subheading != blank %}
+        <p class="hero-subheading">{{ section.settings.subheading | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h1 class="hero-heading">{{ section.settings.heading | escape }}</h1>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="hero-text">{{ section.settings.text }}</div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link }}" class="hero-button">
+          {{ section.settings.button_label | escape }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "section-hero-banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media Type",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "info": "Select a video uploaded to your Shopify media library."
+    },
+    {
+      "type": "select",
+      "id": "banner_height",
+      "label": "Banner Height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small (400px)"
+        },
+        {
+          "value": "medium",
+          "label": "Medium (550px)"
+        },
+        {
+          "value": "large",
+          "label": "Large (700px)"
+        },
+        {
+          "value": "full",
+          "label": "Full Screen (100vh)"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 40
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "New Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Experience True Luxury"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Discover our latest arrivals designed for high style and ultimate comfort.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

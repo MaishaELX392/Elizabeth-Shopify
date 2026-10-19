@@ -1,0 +1,42 @@
+{{ 'content.css' | asset_url | stylesheet_tag }}
+
+<section class="content-section">
+
+  {% content_for 'blocks' %}
+
+  <div class="content-section__text">
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.text }}</p>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Content",
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Example"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Discover our latest collection."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Content"
+    }
+  ]
+}
+{% endschema %}

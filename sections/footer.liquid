@@ -1,0 +1,183 @@
+{{ 'footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          
+          {%- when 'menu' -%}
+            <div class="footer-col" {{ block.shopify_attributes }}>
+              {% if block.settings.heading != blank %}
+                <h3 class="footer-heading">{{ block.settings.heading | escape }}</h3>
+              {% endif %}
+              {% assign menu = linklists[block.settings.menu] %}
+              {% if menu.links.size > 0 %}
+                <ul class="footer-links">
+                  {% for link in menu.links %}
+                    <li>
+                      <a href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+
+          {%- when 'text' -%}
+            <div class="footer-col" {{ block.shopify_attributes }}>
+              {% if block.settings.heading != blank %}
+                <h3 class="footer-heading">{{ block.settings.heading | escape }}</h3>
+              {% endif %}
+              {% if block.settings.subtext != blank %}
+                <div class="footer-text-content">
+                  {{ block.settings.subtext }}
+                </div>
+              {% endif %}
+            </div>
+
+          {%- when 'newsletter' -%}
+            <div class="footer-col footer-newsletter-col" {{ block.shopify_attributes }}>
+              {% if block.settings.heading != blank %}
+                <h3 class="footer-heading">{{ block.settings.heading | escape }}</h3>
+              {% endif %}
+              {% if block.settings.subtext != blank %}
+                <p class="footer-newsletter-text">{{ block.settings.subtext }}</p>
+              {% endif %}
+              
+              {% form 'customer', class: 'footer-newsletter-form' %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="newsletter-input-group">
+                  <input
+                    type="email"
+                    name="contact[email]"
+                    class="newsletter-input"
+                    placeholder="Enter your email"
+                    value="{{ form.email }}"
+                    aria-label="Email address"
+                    required
+                  >
+                  <button type="submit" class="newsletter-submit" name="commit">
+                    Subscribe
+                  </button>
+                </div>
+                {% if form.posted_successfully? %}
+                  <p class="newsletter-success">Thanks for subscribing!</p>
+                {% endif %}
+              {% endform %}
+            </div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+
+    </div>
+
+    <!-- Footer Bottom Area -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <p class="copyright-text">
+          &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. All rights reserved.
+        </p>
+      </div>
+
+      {% if section.settings.show_payment_icons %}
+        <div class="footer-payment-icons">
+          <ul class="payment-list">
+            {% for type in shop.enabled_payment_types %}
+              <li class="payment-icon">
+                {{ type | payment_type_svg_tag }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Navigation Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text & Contact",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "About Us"
+        },
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "label": "Content",
+          "default": "<p>Share store details, promotions, or brand message with your customers.</p>"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Subscribe"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Sign up to get the latest on sales, new releases and more."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "text"
+        },
+        {
+          "type": "menu"
+        },
+        {
+          "type": "newsletter"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

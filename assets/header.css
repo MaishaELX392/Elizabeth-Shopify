@@ -2,8 +2,6 @@
   display: none !important;
 } */
 
-
-
 .site-header {
   position: relative;
   background-color: #ffffff;
@@ -41,7 +39,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 
 /* ========================================
    DESKTOP NAVIGATION
@@ -94,9 +91,6 @@
 }
 
 
-/* ========================================
-   DESKTOP DROPDOWN
-======================================== */
 
 .site-header__dropdown {
   position: absolute;
@@ -161,9 +155,6 @@
 }
 
 
-/* ========================================
-   DESKTOP ACTIONS
-======================================== */
 
 .site-header__actions {
   display: none;
@@ -184,7 +175,46 @@
 .site-header__action-link:hover {
   color: #111827;
 }
+.site-header__cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #6b7280;
+  line-height: 1;
+}
 
+.site-header__cart:hover {
+  color: #111827;
+}
+
+.site-header__cart svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.site-header__cart [data-cart-count] {
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 13px;
+  height: 13px;
+  padding:3px;
+  border-radius: 50%;
+  background-color: #ff0000;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 13px;
+  text-align: center;
+
+}
 .site-header__action-button {
   display: inline-flex;
   align-items: center;
@@ -206,7 +236,6 @@
   height: 24px;
   display: block;
 }
-
 
 /* ========================================
    MOBILE MENU BUTTON
@@ -247,7 +276,6 @@
   width: 24px;
   height: 24px;
 }
-
 
 /* ========================================
    MOBILE MENU
@@ -384,7 +412,6 @@
   padding: 12px 0;
 }
 
-
 /* ========================================
    SEARCH BAR
 ======================================== */
@@ -490,13 +517,11 @@
   height: 24px;
 }
 
-
 /* ========================================
    RESPONSIVE
 ======================================== */
 
 @media screen and (min-width: 640px) {
-
   .site-header__container {
     padding: 0 24px;
   }
@@ -505,11 +530,9 @@
     gap: 32px;
     padding: 32px;
   }
-
 }
 
 @media screen and (min-width: 768px) {
-
   .site-header__inner {
     justify-content: flex-start;
     gap: 40px;
@@ -531,11 +554,9 @@
   .site-header__search-inner {
     min-height: 180px;
   }
-
 }
 
 @media screen and (min-width: 1024px) {
-
   .site-header__logo {
     flex: 1;
   }
@@ -549,11 +570,9 @@
     margin-left: 0;
     transform: translateX(-50%);
   }
-
 }
 
 @media screen and (max-width: 767px) {
-
   .site-header__search {
     position: fixed;
   }
@@ -571,5 +590,4 @@
     top: 16px;
     right: 16px;
   }
-
 }

@@ -1,0 +1,29 @@
+<div class="product-info-block" {{ block.shopify_attributes }}>
+  {% if block.settings.product != blank %}
+    <h2 class="product-info-block__title">
+      {{ block.settings.product.title }}
+    </h2>
+
+    <p>
+      {{ block.settings.product.description }}
+    </p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Product Info",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Info"
+    }
+  ]
+}
+{% endschema %}
