@@ -34,10 +34,58 @@
         "show_navigation": true,
         "show_pagination": true
       }
+    },
+    "customer_reviews_rjC9Ah": {
+      "type": "customer-reviews",
+      "blocks": {
+        "review_t8Rybx": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Unmatched Quality",
+            "review": "The product exceeded my expectations. The craftsmanship and speed of delivery were top-tier!",
+            "author_name": "Emma W.",
+            "author_image": "shopify://shop_images/autumn-photographer-taking-picture.jpg",
+            "verified": true
+          }
+        },
+        "review_EmkGhj": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Exceeded Expectations",
+            "review": "Fantastic service from start to finish. I will definitely be ordering again in the near future.",
+            "author_name": "Marcus B.",
+            "verified": true
+          }
+        },
+        "review_hkcKRi": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Will Order Again!",
+            "review": "The packaging was beautiful and the item was exactly as described. Highly recommended!",
+            "author_name": "Sophia L.",
+            "author_image": "shopify://shop_images/woman-applying-lipstick.jpg",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "review_t8Rybx",
+        "review_EmkGhj",
+        "review_hkcKRi"
+      ],
+      "name": "Customer Reviews",
+      "settings": {
+        "heading": "What Our Customers Say",
+        "subheading": "Read real stories and experiences from verified buyers"
+      }
     }
   },
   "order": [
     "hero_banner_khf66g",
-    "featured-collection"
+    "featured-collection",
+    "customer_reviews_rjC9Ah"
   ]
 }
