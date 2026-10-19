@@ -1,40 +1,150 @@
+
 {{ 'collection.css' | asset_url | stylesheet_tag }}
 {{ 'product-card.css' | asset_url | stylesheet_tag }}
 {{ 'pagination.css' | asset_url | stylesheet_tag }}
 
 <div class="collection">
-
   {% paginate collection.products by section.settings.number_of_products_per_page %}
-
     <h1 class="collection__title">
       {{ collection.title }}
     </h1>
 
     <div class="collection__container">
+      <div class="collection__main-content">
+        {% if section.settings.enable_sorting and collection.products.size > 0 %}
+          <div class="collection__toolbar">
+            <div class="collection__sort-by">
+              <label for="SortBy">Sort by:</label>
+              <select name="sort_by" id="SortBy" class="collection__sort-select">
+                {% for option in collection.sort_options %}
+                  <option
+                    value="{{ option.value | escape }}"
+                    {% if option.value == collection.sort_by %}selected{% endif %}
+                  >
+                    {{ option.name | escape }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        {% endif %}
 
-      <div class="collection__grid">
+        <div class="collection__content-wrapper">
+          {% if section.settings.enable_filtering and collection.filters.size > 0 %}
+            <aside class="collection__filters">
+              <form class="collection__filters-form">
+                {% for filter in collection.filters %}
+                  <details class="collection__filter-group" open>
+                    <summary class="collection__filter-group-summary">
+                      <span>{{ filter.label }}</span>
+                    </summary>
 
-        {% for product in collection.products %}
+                    <div class="collection__filter-group-display">
+                      {% case filter.type %}
+                        {% when 'list' %}
+                          <ul class="collection__filter-list">
+                            {% for filter_value in filter.values %}
+                              <li class="collection__filter-item">
+                                <label class="collection__filter-label">
+                                  <input
+                                    type="checkbox"
+                                    name="{{ filter_value.param_name }}"
+                                    value="{{ filter_value.value | escape }}"
+                                    {% if filter_value.active %}checked{% endif %}
+                                    {% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+                                  >
+                                  {{ filter_value.label }} ({{ filter_value.count }})
+                                </label>
+                              </li>
+                            {% endfor %}
+                          </ul>
 
-          {% render 'product-card', product_product: product %}
+                        {% when 'price_range' %}
+                          <div class="collection__filter-price">
+                            {% assign price_inputs = 'min,max' | split: ',' %}
 
-        {% else %}
+                            {% for price_type in price_inputs %}
+                              {% if price_type == 'min' %}
+                                {% assign price_filter = filter.min_value %}
+                                {% assign price_label = 'From' %}
+                                {% assign price_id = 'GTE' %}
+                                {% assign price_placeholder = '0' %}
+                              {% else %}
+                                {% assign price_filter = filter.max_value %}
+                                {% assign price_label = 'To' %}
+                                {% assign price_id = 'LTE' %}
+                                {% assign price_placeholder = filter.range_max | divided_by: 100.0 %}
+                              {% endif %}
 
-          <p class="collection__empty">
-            There are no products inside of this collection
-          </p>
+                              <div class="collection__filter-price-field">
+                                <span>{{ cart.currency.symbol }}</span>
+                                <input
+                                  type="number"
+                                  name="{{ price_filter.param_name }}"
+                                  id="Filter-{{ filter.label | escape }}-{{ price_id }}"
+                                  {% if price_filter.value != nil %}
+                                    value="{{ price_filter.value | divided_by: 100.0 }}"
+                                  {% endif %}
+                                  placeholder="{{ price_placeholder }}"
+                                  min="0"
+                                  max="{{ filter.range_max | divided_by: 100.0 }}"
+                                >
+                                <label for="Filter-{{ filter.label | escape }}-{{ price_id }}">
+                                  {{ price_label }}
+                                </label>
+                              </div>
+                            {% endfor %}
+                          </div>
+                      {% endcase %}
+                    </div>
+                  </details>
+                {% endfor %}
 
-        {% endfor %}
+                <div class="collection__filter-actions">
+                  <a href="{{ collection.url }}" class="collection__filter-reset">Reset All</a>
+                </div>
+              </form>
+            </aside>
+          {% endif %}
 
+          <div class="collection__grid">
+            {% for product in collection.products %}
+              {% render 'product-card', product_product: product %}
+            {% else %}
+              <p class="collection__empty">
+                There are no products inside of this collection
+              </p>
+            {% endfor %}
+          </div>
+        </div>
       </div>
-
     </div>
 
     {% render 'pagination', pagination: paginate %}
-
   {% endpaginate %}
-
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sortSelect = document.querySelector('#SortBy');
+    const filterForm = document.querySelector('.collection__filters-form');
+
+    sortSelect?.addEventListener('change', (event) => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort_by', event.target.value);
+      window.location.href = url.href;
+    });
+
+    filterForm?.addEventListener('change', () => {
+      const url = new URL(window.location.href);
+      const formData = new FormData(filterForm);
+      const searchParams = new URLSearchParams(formData);
+
+      url.search = searchParams.toString();
+      window.location.href = url.href;
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -45,6 +155,18 @@
       "id": "number_of_products_per_page",
       "default": 6,
       "label": "Number of products per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable filtering"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "Enable sorting"
     }
   ]
 }

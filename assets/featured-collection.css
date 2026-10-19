@@ -1,5 +1,4 @@
 
-
 .featured-collection-section {
   padding: 60px 20px;
   background-color: #ffffff;
@@ -25,7 +24,17 @@
   padding: 10px 5px 45px 5px;
 }
 
+.featured-collection-container .swiper-wrapper {
+  align-items: stretch;
+}
+
+.featured-collection-container .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
 .product-card {
+  width: 100%;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -45,9 +54,10 @@
   display: block;
   position: relative;
   width: 100%;
-  padding-top: 100%; 
+  padding-top: 100%;
   background-color: #f9fafb;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .product-card-image,
@@ -77,6 +87,7 @@
   font-weight: 600;
   margin: 0 0 8px 0;
   line-height: 1.4;
+  min-height: 44px;
 }
 
 .product-card-title a {
@@ -96,6 +107,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-height: 22px;
 }
 
 .price-regular {
@@ -110,6 +122,10 @@
   color: #9ca3af;
   text-decoration: line-through;
   font-size: 14px;
+}
+
+.product-card-info form {
+  margin-top: auto;
 }
 
 .product-card-button {
@@ -136,23 +152,64 @@
   cursor: not-allowed;
 }
 
-/* Customizing Swiper Navigation Controls */
-.featured-collection-container .swiper-button-next,
-.featured-collection-container .swiper-button-prev {
+
+.featured-collection-container > .swiper-button-prev,
+.featured-collection-container > .swiper-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #111827;
   width: 40px;
   height: 40px;
+  margin: 0;
   background-color: #ffffff;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
 }
 
-.featured-collection-container .swiper-button-next::after,
-.featured-collection-container .swiper-button-prev::after {
+.featured-collection-container > .swiper-button-prev {
+  left: -60px;
+}
+
+.featured-collection-container > .swiper-button-next {
+  right: -60px;
+}
+
+.featured-collection-container > .swiper-button-prev::after,
+.featured-collection-container > .swiper-button-next::after {
   font-size: 18px;
   font-weight: bold;
 }
 
+
 .featured-collection-container .swiper-pagination-bullet-active {
   background-color: #111827;
+}
+
+@media screen and (max-width: 767px) {
+  .featured-collection-section {
+    padding: 40px 16px;
+  }
+
+  .featured-collection-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .product-card-info {
+    padding: 12px;
+  }
+
+  .product-card-title {
+    font-size: 14px;
+    min-height: 40px;
+  }
+
+  .product-card-price {
+    font-size: 14px;
+  }
 }

@@ -1,5 +1,6 @@
 {{ 'featured-collection.css' | asset_url | stylesheet_tag }}
 
+
 <div class="featured-collection-section">
   <div class="featured-collection-container">
     {% if section.settings.title != blank %}
@@ -7,6 +8,11 @@
     {% endif %}
 
     {% assign featured_collection = collections[section.settings.collection] %}
+
+    {% if section.settings.show_navigation %}
+      <div class="swiper-button-prev featured-swiper-prev-{{ section.id }}"></div>
+      <div class="swiper-button-next featured-swiper-next-{{ section.id }}"></div>
+    {% endif %}
 
     <div class="swiper featured-swiper-{{ section.id }}">
       <div class="swiper-wrapper">
@@ -79,17 +85,13 @@
         {% endif %}
       </div>
 
-      {% if section.settings.show_navigation %}
-        <div class="swiper-button-prev featured-swiper-prev-{{ section.id }}"></div>
-        <div class="swiper-button-next featured-swiper-next-{{ section.id }}"></div>
-      {% endif %}
-
       {% if section.settings.show_pagination %}
         <div class="swiper-pagination featured-swiper-pagination-{{ section.id }}"></div>
       {% endif %}
     </div>
   </div>
 </div>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

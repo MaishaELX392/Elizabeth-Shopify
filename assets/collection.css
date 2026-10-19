@@ -1,28 +1,289 @@
 .collection {
-  padding: 32px 16px;
+  padding: 40px 16px;
+  background-color: #f9fafb;
 }
 
 .collection__title {
-  margin: 0;
+  margin: 0 0 32px 0;
   text-align: center;
-  font-size: 30px;
-  line-height: 36px;
-  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.025em;
 }
 
 .collection__container {
-  max-width: 1152px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+.collection__main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.collection__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.collection__sort-by {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.collection__sort-select {
+  padding: 10px 36px 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%234b5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.collection__sort-select:hover {
+  border-color: #9ca3af;
+}
+
+.collection__sort-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.collection__content-wrapper {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.collection__filters {
+  width: 280px;
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+  position: sticky;
+  top: 24px;
+}
+
+.collection__filter-group {
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+}
+
+.collection__filter-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.collection__filter-group-summary {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+.collection__filter-group-summary:hover {
+  color: #2563eb;
+}
+
+.collection__filter-group-summary::-webkit-details-marker {
+  display: none;
+}
+
+.collection__filter-group-summary::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m19.5 8.25-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+details[open] .collection__filter-group-summary::after {
+  transform: rotate(180deg);
+}
+
+.collection__filter-group-display {
+  padding-top: 14px;
+}
+
+.collection__filter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.collection__filter-item {
+  display: flex;
+  align-items: center;
+}
+
+.collection__filter-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #4b5563;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.collection__filter-label:hover {
+  color: #111827;
+}
+
+.collection__filter-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 4px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  margin: 0;
+}
+
+.collection__filter-price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.collection__filter-price-field {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.collection__filter-price-field span {
+  position: absolute;
+  left: 12px;
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.collection__filter-price-field input {
+  width: 100%;
+  padding: 8px 10px 8px 26px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.collection__filter-price-field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.collection__filter-actions {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f3f4f6;
+  text-align: center;
+}
+
+.collection__filter-reset {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #dc2626;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.collection__filter-reset:hover {
+  background-color: #ffeeec;
+}
+
 .collection__grid {
+  flex-grow: 1;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 24px;
+  align-self: flex-start;
 }
 
 .collection__empty {
   margin: 0;
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 16px;
+  color: #6b7280;
+  padding: 60px 0;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+@media screen and (max-width: 767px) {
+  .collection__content-wrapper {
+    flex-direction: column;
+  }
+
+  .collection__filters {
+    width: 100%;
+    position: static;
+  }
+
+  .collection__toolbar {
+    padding: 16px;
+  }
+
+  .collection__sort-by {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .collection__sort-select {
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 768px) {
