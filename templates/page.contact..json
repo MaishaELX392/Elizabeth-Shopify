@@ -1,11 +1,29 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  
   "sections": {
-    "template-page": {
-      "type": "template-contact"
+    "template_contact_Dp8DFx": {
+      "type": "template-contact",
+      "name": "Contact Page",
+      "settings": {
+        "title": "",
+        "info_heading": "Get in Touch",
+        "info_text": "<p>Have questions about your order or our products? Send us a message and our support team will respond within 24 hours.</p>",
+        "phone": "+1 (555) 000-0000",
+        "email": "support@example.com",
+        "address": "123 Fashion Street, Suite 100, New York, NY 10001",
+        "hours": "Mon - Fri: 9:00 AM - 6:00 PM EST"
+      }
     }
   },
   "order": [
-    "template-contact"
+    "template_contact_Dp8DFx"
   ]
 }
