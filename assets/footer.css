@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Footer Component Styles
-   ========================================================================== */
+
 
 .site-footer {
   background-color: #111827;
@@ -156,4 +154,76 @@
 .payment-icon svg {
   height: 24px;
   width: auto;
+}
+@media screen and (max-width: 767px) {
+  .site-footer {
+    padding: 16px 12px 12px 12px; 
+    overflow-x: hidden;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 10px; 
+    padding-bottom: 12px;
+  }
+
+  .footer-heading {
+    font-size: 12px; 
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-links li {
+    margin-bottom: 3px;
+  }
+
+  .footer-links a,
+  .footer-text-content p,
+  .footer-newsletter-text {
+    font-size: 11.5px; 
+    line-height: 1.3;
+  }
+
+  .footer-newsletter-text {
+    margin-bottom: 6px;
+  }
+
+  .newsletter-input-group {
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .newsletter-input {
+    padding: 6px 8px;
+    font-size: 11.5px;
+    height: 32px; 
+  }
+
+  .newsletter-submit {
+    padding: 6px 10px;
+    font-size: 11.5px;
+    height: 32px;
+    white-space: nowrap;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 6px;
+    padding-top: 10px;
+  }
+
+  .copyright-text {
+    font-size: 10.5px;
+  }
+
+  .payment-list {
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .payment-icon svg {
+    height: 16px; 
+  }
 }

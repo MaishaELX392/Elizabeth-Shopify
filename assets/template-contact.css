@@ -1,10 +1,11 @@
-/* ==========================================================================
-   Template Contact Styles
-   ========================================================================== */
+
 
 .template-contact {
-  margin: 32px 0;
   width: 100%;
+  margin: 0;
+  padding: 16px;
+  box-sizing: border-box;
+
 }
 
 .template-contact__container {
@@ -39,8 +40,10 @@
 }
 
 @media screen and (min-width: 768px) {
+
+
   .template-contact__title {
-    margin: 64px 0 32px 0;
+    margin: 32px 0;
     font-size: 36px;
   }
 

@@ -291,3 +291,125 @@ details[open] .collection__filter-group-summary::after {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+
+@media screen and (max-width: 767px) {
+  .collection {
+    padding: 20px 10px;
+    overflow-x: hidden; 
+  }
+
+  .collection__title {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+
+  .collection__main-content {
+    gap: 0px;
+  }
+
+  .collection__toolbar {
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .collection__sort-by {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .collection__sort-select {
+    width: 100%;
+    padding: 6px 28px 6px 10px;
+    font-size: 12px;
+    height: 32px;
+  }
+
+  .collection__content-wrapper {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .collection__filters {
+    width: 100%;
+    position: static;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .collection__filter-group {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+
+  .collection__filter-group-summary {
+    font-size: 12px;
+  }
+
+  .collection__filter-group-summary::after {
+    width: 10px;
+    height: 10px;
+    background-size: 9px;
+  }
+
+  .collection__filter-list {
+    gap: 6px;
+  }
+
+  .collection__filter-label {
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .collection__filter-label input[type="checkbox"] {
+    width: 13px;
+    height: 13px;
+  }
+
+  .collection__filter-price {
+    gap: 6px;
+  }
+
+  .collection__filter-price-field span {
+    left: 6px;
+    font-size: 10px;
+  }
+
+  .collection__filter-price-field input {
+    padding: 4px 4px 4px 18px;
+    font-size: 11px;
+    height: 26px;
+    border-radius: 4px;
+  }
+
+  .collection__filter-price-field label {
+    font-size: 10px;
+  }
+
+  .collection__filter-actions {
+    margin-top: 8px;
+    padding-top: 6px;
+  }
+
+  .collection__filter-reset {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  .collection__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .collection__empty {
+    grid-column: 1 / -1;
+    padding: 40px 16px;
+    font-size: 14px;
+  }
+}

@@ -15,13 +15,17 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js" defer></script>
   </head>
-  <body>
-        {% section 'announcement-bar'  %}
-    {% section 'header'  %}
-    <main role="main">
-      {{ content_for_layout }}
-      {% section 'cart-drawer' %}
-    </main>
-    {% section 'footer' %}
-  </body>
+ <body>
+  <div class="site-header-wrapper">
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+  </div>
+
+  <main role="main">
+    {{ content_for_layout }}
+    {% section 'cart-drawer' %}
+  </main>
+
+  {% section 'footer' %}
+</body>
 </html>

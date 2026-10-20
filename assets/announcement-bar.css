@@ -1,3 +1,11 @@
+.site-header-wrapper {
+  position: -webkit-sticky;
+  position: fixed;
+
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
 .announcement-bar {
   width: 100%;
   padding: 10px 16px;
@@ -32,7 +40,6 @@
   opacity: 0;
 }
 
-/* Single message display */
 .announcement-bar__count-1 .announcement-bar__message {
   opacity: 1;
 }

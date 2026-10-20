@@ -1,14 +1,54 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; 
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 body {
-
-font-family: 'Plus Jakarta Sans', var(--font-body-family, sans-serif), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;}
-
+    font-family: 'Plus Jakarta Sans', var(--font-body-family, sans-serif), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+main {
+    padding-top: 90px; 
+}
+.site-header-wrapper {
+position: -webkit-sticky;
+  position: sticky; /* Or position: fixed; if you want it permanently floating */
+  top: 0;           /* Crucial: tells the browser to stick it to the top */
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
 .homepage {
     text-align: center;
     padding-top: 10em;
+    max-width: 100%;
 }
 
 .logo {
     width: 25%;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    main {
+    padding-top: 80px;
+    }
+    .homepage {
+        padding-top: 4em;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .logo {
+        width: 50%;
+    }
 }
