@@ -32,40 +32,60 @@
   opacity: 0;
 }
 
+/* Single message display */
 .announcement-bar__count-1 .announcement-bar__message {
   opacity: 1;
 }
 
+/* 2 blocks cycle (6 seconds total, 3s per message) */
 .announcement-bar__count-2 .announcement-bar__message {
-  animation: fadeAnnouncements2 4s infinite ease-in-out;
+  animation: fadeAnnouncements2 6s infinite ease-in-out;
+}
+
+.announcement-bar__count-2 .announcement-bar__message--2 {
+  animation-delay: 3s;
 }
 
 @keyframes fadeAnnouncements2 {
-  0% {
+  0%, 100% {
     opacity: 0;
   }
-  10%, 45% {
+  5%, 45% {
     opacity: 1;
   }
-  55%, 100% {
+  55%, 95% {
     opacity: 0;
   }
 }
 
+/* 3 blocks cycle (9 seconds total, 3s per message) */
 .announcement-bar__count-3 .announcement-bar__message {
-  animation: fadeAnnouncements3 6s infinite ease-in-out;
+  animation: fadeAnnouncements3 9s infinite ease-in-out;
+}
+
+.announcement-bar__count-3 .announcement-bar__message--2 {
+  animation-delay: 3s;
+}
+
+.announcement-bar__count-3 .announcement-bar__message--3 {
+  animation-delay: 6s;
 }
 
 @keyframes fadeAnnouncements3 {
-  0% {
+  0%, 36%, 100% {
     opacity: 0;
   }
-  5%, 30% {
+  3%, 30% {
     opacity: 1;
   }
-  38%, 100% {
+  33% {
     opacity: 0;
   }
+}
+
+.announcement-bar__message a,
+.announcement-bar__message span {
+  color: inherit;
 }
 
 .announcement-bar__message a {
