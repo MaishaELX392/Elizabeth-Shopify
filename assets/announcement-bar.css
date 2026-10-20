@@ -32,12 +32,10 @@
   opacity: 0;
 }
 
-/* Single block (static display, no animation) */
 .announcement-bar__count-1 .announcement-bar__message {
   opacity: 1;
 }
 
-/* Two blocks (4s total loop, 2s visible each) */
 .announcement-bar__count-2 .announcement-bar__message {
   animation: fadeAnnouncements2 4s infinite ease-in-out;
 }
