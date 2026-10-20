@@ -35,7 +35,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.site-header__logo-link {
+  color: inherit;
+  text-decoration: none;
+}
 .site-header__nav {
   display: none;
   align-items: center;
