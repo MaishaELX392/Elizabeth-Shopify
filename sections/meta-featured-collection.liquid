@@ -1,0 +1,95 @@
+{{ 'meta-featured-collection.css' | asset_url | stylesheet_tag }}
+
+{% assign entry = section.settings.metaobject_entry %}
+
+{% if entry != blank %}
+  <div 
+    class="meta-collection-section" 
+    style="
+      --accent-color: {{ entry.accent_color.value | default: 'inherit' }};
+      --bg-color: {{ section.settings.background_color }};
+      --text-color: {{ section.settings.text_color }};
+    "
+  >
+    <div class="meta-collection-container">
+      
+      <div class="meta-collection-header">
+        {% if entry.banner_image.value != blank %}
+          <div class="meta-collection-banner">
+            {{ entry.banner_image.value | image_url: width: 1400 | image_tag: loading: 'lazy', alt: entry.headline.value }}
+          </div>
+        {% endif %}
+
+        <div class="meta-collection-details">
+          {% if entry.custom_badge.value != blank %}
+            <span class="meta-collection-badge">{{ entry.custom_badge.value }}</span>
+          {% endif %}
+
+          {% if entry.headline.value != blank %}
+            <h2 class="meta-collection-title">{{ entry.headline.value }}</h2>
+          {% endif %}
+
+          {% if entry.description.value != blank %}
+            <div class="meta-collection-description">
+              {{ entry.description.value | metafield_tag }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% assign target_collection = entry.featured_collection.value %}
+      {% if target_collection != blank and target_collection.products_count > 0 %}
+        <div class="meta-product-grid">
+          {% for product in target_collection.products limit: section.settings.products_to_show %}
+            <div class="meta-product-grid__item">
+              {% render 'card-product', card_product: product %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Meta Featured Collection",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "metaobject",
+      "id": "metaobject_entry",
+      "label": "Curated Collection Entry",
+      "metaobject_type": "curated_collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Products to display"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meta Featured Collection"
+    }
+  ]
+}
+{% endschema %}
