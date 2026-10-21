@@ -6,7 +6,6 @@
   <div 
     class="meta-collection-section" 
     style="
-      --accent-color: {{ entry.accent_color.value | default: 'inherit' }};
       --bg-color: {{ section.settings.background_color }};
       --text-color: {{ section.settings.text_color }};
     "
@@ -39,17 +38,72 @@
 
       {% assign target_collection = entry.featured_collection.value %}
       {% if target_collection != blank and target_collection.products_count > 0 %}
-        <div class="meta-product-grid">
-          {% for product in target_collection.products limit: section.settings.products_to_show %}
-            <div class="meta-product-grid__item">
+        <div class="meta-product-grid" id="MetaProductGrid-{{ section.id }}">
+          {% for product in target_collection.products limit: section.settings.total_products_limit %}
+            <div 
+              class="meta-product-grid__item{% if forloop.index > 2 and forloop.index <= 4 %} meta-product-grid__item--mobile-hidden{% endif %}{% if forloop.index > 4 %} meta-product-grid__item--hidden{% endif %}"
+              data-product-index="{{ forloop.index }}"
+            >
               {% render 'card-product', card_product: product %}
             </div>
           {% endfor %}
         </div>
+
+        {% if target_collection.products_count > 2 %}
+          <div class="meta-collection-actions">
+            <button 
+              type="button" 
+              class="meta-collection-view-more-btn"
+              id="ViewMoreBtn-{{ section.id }}"
+              onclick="toggleMetaProducts('{{ section.id }}')"
+            >
+              View More
+            </button>
+          </div>
+        {% endif %}
       {% endif %}
 
     </div>
   </div>
+
+  <script>
+ 
+function toggleMetaProducts(sectionId) {
+  const grid = document.getElementById(`MetaProductGrid-${sectionId}`);
+  const btn = document.getElementById(`ViewMoreBtn-${sectionId}`);
+
+  if (!grid || !btn) return;
+
+  const hiddenItems = grid.querySelectorAll(
+    '.meta-product-grid__item--hidden, .meta-product-grid__item--mobile-hidden'
+  );
+
+  if (hiddenItems.length) {
+    hiddenItems.forEach(item => {
+      item.classList.remove(
+        'meta-product-grid__item--hidden',
+        'meta-product-grid__item--mobile-hidden'
+      );
+    });
+
+    btn.textContent = 'View Less';
+    return;
+  }
+
+  const isMobile = window.innerWidth <= 749;
+
+  grid.querySelectorAll('.meta-product-grid__item').forEach((item, index) => {
+    if (isMobile && index >= 2 && index < 4) {
+      item.classList.add('meta-product-grid__item--mobile-hidden');
+    } else if (index >= 4) {
+      item.classList.add('meta-product-grid__item--hidden');
+    }
+  });
+
+  btn.textContent = 'View More';
+}
+
+  </script>
 {% endif %}
 
 {% schema %}
@@ -66,12 +120,12 @@
     },
     {
       "type": "range",
-      "id": "products_to_show",
-      "min": 2,
-      "max": 12,
-      "step": 1,
-      "default": 4,
-      "label": "Products to display"
+      "id": "total_products_limit",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12,
+      "label": "Total products pool limit"
     },
     {
       "type": "color",
