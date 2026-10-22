@@ -89,7 +89,7 @@
         "pick_up_where_you_left_off_star_rating_3Un46T": {
           "type": "shopify://apps/pick-up-where-you-left-off/blocks/star_rating/01a162a7-1b77-7fcc-8b83-d0196c5a481e",
           "settings": {
-            "product": "",
+            "product": "the-collection-snowboard-hydrogen",
             "colour": "#ff0000"
           }
         }
