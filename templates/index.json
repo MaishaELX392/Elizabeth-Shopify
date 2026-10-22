@@ -82,11 +82,28 @@
         "heading": "What Our Customers Say",
         "subheading": "Read real stories and experiences from verified buyers"
       }
+    },
+    "1792661731a0b50fe9": {
+      "type": "apps",
+      "blocks": {
+        "pick_up_where_you_left_off_star_rating_3Un46T": {
+          "type": "shopify://apps/pick-up-where-you-left-off/blocks/star_rating/01a162a7-1b77-7fcc-8b83-d0196c5a481e",
+          "settings": {
+            "product": "",
+            "colour": "#ff0000"
+          }
+        }
+      },
+      "block_order": [
+        "pick_up_where_you_left_off_star_rating_3Un46T"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "hero_banner_khf66g",
     "featured-collection",
-    "customer_reviews_rjC9Ah"
+    "customer_reviews_rjC9Ah",
+    "1792661731a0b50fe9"
   ]
 }
