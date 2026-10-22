@@ -62,7 +62,7 @@
           "announcement_7gb9z9": {
             "type": "announcement",
             "settings": {
-              "text": "Free shipping to Bangladesh on orders over Tk32,845.00",
+              "text": "Sign up now and get 10% off your first purchase!",
               "link": ""
             }
           },
@@ -85,7 +85,17 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "10366665434008408820": {
+        "type": "shopify://apps/pick-up-where-you-left-off/blocks/recently-viewed/01a16302-2fdc-7f98-a302-336cb972d9e2",
+        "disabled": false,
+        "settings": {
+          "heading": "Pick Up Where You Left Off",
+          "product_limit": 4
+        }
+      }
+    }
   },
   "presets": {
     "Default": {}
