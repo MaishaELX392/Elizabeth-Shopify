@@ -91,12 +91,23 @@
         "product_limit": 4,
         "show_price": true
       }
+    },
+    "meta_featured_collection_Epa6V4": {
+      "type": "meta-featured-collection",
+      "name": "Meta Featured Collection",
+      "settings": {
+        "metaobject_entry": "",
+        "total_products_limit": 12,
+        "background_color": "#ffffff",
+        "text_color": "#000000"
+      }
     }
   },
   "order": [
     "hero_banner_khf66g",
     "featured-collection",
     "customer_reviews_rjC9Ah",
-    "recently_viewed_products_697Q9F"
+    "recently_viewed_products_697Q9F",
+    "meta_featured_collection_Epa6V4"
   ]
 }
