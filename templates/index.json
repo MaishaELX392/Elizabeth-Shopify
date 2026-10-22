@@ -82,11 +82,21 @@
         "heading": "What Our Customers Say",
         "subheading": "Read real stories and experiences from verified buyers"
       }
+    },
+    "recently_viewed_products_697Q9F": {
+      "type": "recently-viewed-products",
+      "name": "Recently viewed products",
+      "settings": {
+        "heading": "Pick Up Where You Left Off",
+        "product_limit": 4,
+        "show_price": true
+      }
     }
   },
   "order": [
     "hero_banner_khf66g",
     "featured-collection",
-    "customer_reviews_rjC9Ah"
+    "customer_reviews_rjC9Ah",
+    "recently_viewed_products_697Q9F"
   ]
 }
