@@ -101,6 +101,15 @@
         "product_limit": 4,
         "show_price": true
       }
+    },
+    "recently_viewed_products_pbBi3m": {
+      "type": "recently-viewed-products",
+      "name": "Recently viewed products",
+      "settings": {
+        "heading": "Pick Up Where You Left Off",
+        "product_limit": 4,
+        "show_price": true
+      }
     }
   },
   "order": [
@@ -108,6 +117,7 @@
     "featured-collection",
     "customer_reviews_rjC9Ah",
     "meta_featured_collection_Epa6V4",
-    "recently_viewed_products_697Q9F"
+    "recently_viewed_products_697Q9F",
+    "recently_viewed_products_pbBi3m"
   ]
 }
