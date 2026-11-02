@@ -47,20 +47,25 @@
                     {% endif %}
                   </div>
 
-                  <form method="post" action="/cart/add">
-                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                    <button
-                      type="submit"
-                      class="product-card-button"
-                      {% unless product.available %}disabled{% endunless %}
-                    >
-                      {% if product.available %}
-                        Add to Cart
-                      {% else %}
-                        Sold Out
-                      {% endif %}
-                    </button>
-                  </form>
+           <form class="featured-product-form">
+  <input
+    type="hidden"
+    name="id"
+    value="{{ product.selected_or_first_available_variant.id }}"
+  >
+
+  <button
+    type="submit"
+    class="product-card-button"
+    {% unless product.available %}disabled{% endunless %}
+  >
+    {% if product.available %}
+      Add to Cart
+    {% else %}
+      Sold Out
+    {% endif %}
+  </button>
+</form>
                 </div>
               </div>
             </div>
@@ -95,33 +100,84 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    new Swiper('.featured-swiper-{{ section.id }}', {
-      slidesPerView: 1,
-      spaceBetween: 20,
-      loop: false,
-      navigation: {
-        nextEl: '.featured-swiper-next-{{ section.id }}',
-        prevEl: '.featured-swiper-prev-{{ section.id }}',
-      },
-      pagination: {
-        el: '.featured-swiper-pagination-{{ section.id }}',
-        clickable: true,
-      },
-      breakpoints: {
-        640: {
-          slidesPerView: 2,
-          spaceBetween: 20,
+
+    const swiperElement = document.querySelector('.featured-swiper-{{ section.id }}');
+
+    if (swiperElement && typeof Swiper !== 'undefined') {
+      new Swiper(swiperElement, {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: false,
+        navigation: {
+          nextEl: '.featured-swiper-next-{{ section.id }}',
+          prevEl: '.featured-swiper-prev-{{ section.id }}',
         },
-        768: {
-          slidesPerView: 3,
-          spaceBetween: 24,
+        pagination: {
+          el: '.featured-swiper-pagination-{{ section.id }}',
+          clickable: true,
         },
-        1024: {
-          slidesPerView: 4,
-          spaceBetween: 28,
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 24,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 28,
+          },
         },
-      },
+      });
+    }
+
+    document.querySelectorAll('.featured-product-form').forEach((productForm) => {
+
+      productForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const button = productForm.querySelector('.product-card-button');
+
+        button.disabled = true;
+
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            body: new FormData(productForm),
+            headers: {
+              Accept: 'application/json'
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to add product');
+          }
+
+          await response.json();
+
+          const cartResponse = await fetch('/cart.js');
+          const cart = await cartResponse.json();
+
+          const cartCount = document.querySelector('[data-cart-count]');
+
+          if (cartCount) {
+            cartCount.textContent = cart.item_count;
+          }
+
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+          document.dispatchEvent(new CustomEvent('cart:open'));
+
+        } catch (error) {
+          console.error('Add to cart error:', error);
+        } finally {
+          button.disabled = false;
+        }
+      });
+
     });
+
   });
 </script>
 

@@ -1,4 +1,5 @@
 
+console.log("Recently viewed script loaded");
 (() => {
   const STORAGE_KEY = "recently-viewed-products";
   const MAX_HISTORY = 12;
@@ -120,6 +121,8 @@
   }
 
   function init() {
+    console.log("Recently viewed init running");
+console.log("Current product handle:", window.rvpCurrentProductHandle);
     trackProduct(window.rvpCurrentProductHandle);
 
     document.querySelectorAll("[data-rvp-section]").forEach((section) => {

@@ -27,5 +27,9 @@
   </main>
 
   {% section 'footer' %}
+      <script>
+      window.rvpCurrentProductHandle = {{ product.handle | json }};
+    </script>
+    <script src="{{ 'recently-viewed-products.js' | asset_url }}" defer></script>
 </body>
 </html>
